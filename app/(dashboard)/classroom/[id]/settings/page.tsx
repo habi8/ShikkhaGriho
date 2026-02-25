@@ -43,7 +43,7 @@ export default async function SettingsPage({ params }: PageProps) {
   if (!classroom || classroom.teacher_id !== user.id) redirect(`/classroom/${id}`)
 
   return (
-    <div className="p-6 sm:p-8 max-w-2xl mx-auto space-y-8">
+    <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto space-y-8">
       {/* Edit details */}
       <div className="rounded-xl border border-border bg-card p-6">
         <h2 className="mb-5 text-base font-semibold text-foreground">Classroom details</h2>

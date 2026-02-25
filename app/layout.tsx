@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Hind_Siliguri } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { FloatingElements } from '@/components/landing/floating-elements'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,7 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
-      <body className={`${inter.variable} ${hindSiliguri.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} ${hindSiliguri.variable} font-sans antialiased bg-transparent text-foreground relative`}>
+        <FloatingElements />
         {children}
         <Analytics />
       </body>

@@ -45,7 +45,7 @@ export default async function MembersPage({ params }: PageProps) {
   const students = (members ?? []).map((m: any) => ({ ...m, profile: m.profiles }))
 
   return (
-    <div className="p-6 sm:p-8 max-w-3xl mx-auto">
+    <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto">
       {/* Invite code (teacher only) */}
       {isTeacher && classroom?.invite_code && (
         <div className="mb-6 flex items-center justify-between rounded-xl border border-border bg-card p-4">

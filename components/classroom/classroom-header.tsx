@@ -54,7 +54,7 @@ export function ClassroomHeader({ classroom, isTeacher }: ClassroomHeaderProps) 
                 key={tab.href}
                 href={tab.href}
                 className={cn(
-                  'shrink-0 border-b-2 px-4 py-3 text-sm font-medium transition-colors',
+                  'shrink-0 border-b-2 px-5 py-4 text-base font-medium transition-colors',
                   isActive
                     ? 'border-primary text-primary'
                     : 'border-transparent text-muted-foreground hover:text-foreground'

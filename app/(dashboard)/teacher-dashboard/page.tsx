@@ -36,7 +36,7 @@ export default async function TeacherDashboardPage() {
     <div className="p-6 sm:p-8 max-w-6xl mx-auto">
       {/* Colored header banner */}
       <div className="mb-8 rounded-2xl px-7 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        style={{ background: 'linear-gradient(120deg, #1E3A8A 0%, #1D4ED8 100%)' }}>
+        style={{ background: 'linear-gradient(120deg, #2E8B57 0%, #228B22 100%)' }}>
         <div>
           <p className="text-sm font-semibold uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Teacher Dashboard</p>
           <h1 className="text-3xl font-bold text-white">

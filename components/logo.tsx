@@ -7,9 +7,10 @@ interface LogoProps {
   href?: string
   textColor?: string
   logoBg?: boolean
+  textSizeClass?: string
 }
 
-export function Logo({ size = 48, showText = true, href = '/', textColor = '#1E3A8A', logoBg = false }: LogoProps) {
+export function Logo({ size = 48, showText = true, href = '/', textColor = '#2E8B57', logoBg = false, textSizeClass = 'text-2xl sm:text-3xl' }: LogoProps) {
   const logoImage = (
     <Image
       src="/images/logo.png"
@@ -31,7 +32,7 @@ export function Logo({ size = 48, showText = true, href = '/', textColor = '#1E3
         logoImage
       )}
       {showText && (
-        <span className="font-bold text-xl leading-tight tracking-tight" style={{ color: textColor }}>
+        <span className={`font-bold leading-tight tracking-tight ${textSizeClass}`} style={{ color: textColor }}>
           ShikkhaGriho
         </span>
       )}

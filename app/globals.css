@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Brand: Deep Academic Blue #1E3A8A + Soft Growth Green #22C55E + Warm Off-White #F8FAFC */
+  /* Brand: Deep Academic Blue #2E8B57 + Soft Growth Green #22C55E + Warm Off-White #F8FAFC */
   --background: #F8FAFC;
   --foreground: #0F172A;
   --card: #ffffff;
@@ -12,7 +12,7 @@
   --popover: #ffffff;
   --popover-foreground: #0F172A;
   /* Primary: Deep Academic Blue */
-  --primary: #1E3A8A;
+  --primary: #2E8B57;
   --primary-foreground: #ffffff;
   --secondary: #DCFCE7;
   --secondary-foreground: #166534;
@@ -25,21 +25,21 @@
   --destructive-foreground: #ffffff;
   --border: #E2E8F0;
   --input: #E2E8F0;
-  --ring: #1E3A8A;
-  --chart-1: #1E3A8A;
+  --ring: #2E8B57;
+  --chart-1: #2E8B57;
   --chart-2: #22C55E;
-  --chart-3: #1D4ED8;
+  --chart-3: #228B22;
   --chart-4: #16A34A;
   --chart-5: #475569;
   --radius: 0.625rem;
   /* Sidebar: Deep Academic Blue */
-  --sidebar: #1E3A8A;
+  --sidebar: #2E8B57;
   --sidebar-foreground: #F8FAFC;
   --sidebar-primary: #22C55E;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1D4ED8;
+  --sidebar-accent: #228B22;
   --sidebar-accent-foreground: #F8FAFC;
-  --sidebar-border: #1D4ED8;
+  --sidebar-border: #228B22;
   --sidebar-ring: #22C55E;
 }
 
@@ -132,9 +132,9 @@
     font-size: 1rem;
     line-height: 1.6;
   }
-  h1 { @apply text-4xl font-bold tracking-tight; color: #1E3A8A; }
-  h2 { @apply text-3xl font-bold tracking-tight; color: #1E3A8A; }
-  h3 { @apply text-2xl font-semibold; color: #1E3A8A; }
-  h4 { @apply text-xl font-semibold; color: #1E3A8A; }
+  h1 { @apply text-4xl font-bold tracking-tight; color: #2E8B57; }
+  h2 { @apply text-3xl font-bold tracking-tight; color: #2E8B57; }
+  h3 { @apply text-2xl font-semibold; color: #2E8B57; }
+  h4 { @apply text-xl font-semibold; color: #2E8B57; }
   p  { @apply text-base leading-relaxed; }
 }

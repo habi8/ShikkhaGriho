@@ -48,7 +48,7 @@ export default async function AnnouncementsPage({ params }: PageProps) {
   }))
 
   return (
-    <div className="p-6 sm:p-8 max-w-3xl mx-auto space-y-6">
+    <div className="p-6 sm:p-8 max-w-5xl flex-1 mx-auto space-y-6 w-full">
       {/* Post announcement (teacher only) */}
       {isTeacher && (
         <form action={postAnnouncement} className="rounded-xl border border-border bg-card p-4 shadow-sm">

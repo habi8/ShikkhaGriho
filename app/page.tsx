@@ -1,19 +1,28 @@
 import { Navbar } from '@/components/navbar'
 import { Hero } from '@/components/landing/hero'
-import { Features } from '@/components/landing/features'
 import { CTA } from '@/components/landing/cta'
+import { Reviews } from '@/components/landing/reviews'
 import { Footer } from '@/components/landing/footer'
+import { createClient } from '@/lib/supabase/server'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createClient()
+
+  // Fetch reviews for the landing page
+  const { data: reviews } = await supabase
+    .from('visitor_reviews')
+    .select('*')
+    .order('created_at', { ascending: false })
+
   return (
-    <>
+    <div className="relative min-h-screen">
       <Navbar />
-      <main>
+      <main className="relative z-10">
         <Hero />
-        <Features />
         <CTA />
+        <Reviews initialReviews={reviews ?? []} />
       </main>
       <Footer />
-    </>
+    </div>
   )
 }

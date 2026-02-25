@@ -1,6 +1,6 @@
 export default function ClassroomLoading() {
     return (
-        <div className="p-6 sm:p-8 max-w-3xl mx-auto animate-pulse space-y-4">
+        <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto animate-pulse space-y-4">
             {/* Announcement skeleton cards */}
             {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="rounded-xl border border-border bg-card p-5 space-y-3">

@@ -52,7 +52,7 @@ export default async function ResourcesPage({ params }: PageProps) {
     }
 
     return (
-        <div className="p-6 sm:p-8 max-w-4xl mx-auto space-y-6">
+        <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto space-y-6">
             {/* Upload area (Teacher only) */}
             {isTeacher && <ResourceUpload classroomId={id} teacherId={user.id} />}
 

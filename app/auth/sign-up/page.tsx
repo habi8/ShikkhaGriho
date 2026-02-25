@@ -64,7 +64,7 @@ export default function SignUpPage() {
             />
           </div>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight" style={{ color: '#1E3A8A' }}>ShikkhaGriho</h1>
+            <h1 className="text-4xl font-bold tracking-tight" style={{ color: '#2E8B57' }}>ShikkhaGriho</h1>
             <p className="text-base mt-1 font-medium" style={{ color: '#475569' }}>শিক্ষা গৃহ — Join your classroom today</p>
           </div>
         </div>

@@ -42,7 +42,7 @@ export default async function AboutPage({ params }: PageProps) {
   ].filter((d) => d.value)
 
   return (
-    <div className="p-6 sm:p-8 max-w-2xl mx-auto">
+    <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto">
       <div className="rounded-xl border border-border bg-card p-6 space-y-5">
         <div>
           <h1 className="text-xl font-bold text-foreground">{classroom.name}</h1>

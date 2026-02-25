@@ -62,7 +62,7 @@ export default async function AttendancePage({ params }: PageProps) {
   }
 
   return (
-    <div className="p-6 sm:p-8 max-w-3xl mx-auto space-y-8">
+    <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto space-y-8">
       {/* Teacher: create session */}
       {isTeacher && !openSession && (
         <form action={createAttendanceSession} className="rounded-xl border border-border bg-card p-5">

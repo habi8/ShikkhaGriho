@@ -34,7 +34,7 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
     <aside className="flex h-full w-72 flex-col bg-sidebar text-sidebar-foreground">
       {/* Logo header with decorative accent */}
       <div className="flex items-center justify-between px-5 py-5 border-b border-sidebar-border/50">
-        <Logo size={40} href={dashboardHref} textColor="#F8FAFC" logoBg />
+        <Logo size={40} href={dashboardHref} textColor="#F8FAFC" logoBg textSizeClass="text-xl" />
         <button
           className="md:hidden text-sidebar-foreground/60 hover:text-sidebar-foreground"
           onClick={() => setMobileOpen(false)}
