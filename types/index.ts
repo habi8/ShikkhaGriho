@@ -70,15 +70,7 @@ export interface AttendanceRecord {
   profile?: Profile
 }
 
-export interface Notification {
-  id: string
-  user_id: string
-  title: string
-  body: string
-  link: string | null
-  is_read: boolean
-  created_at: string
-}
+
 
 export interface PendingInvite {
   id: string

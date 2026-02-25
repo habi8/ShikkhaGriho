@@ -37,7 +37,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <AppSidebar role={role} userId={userId} classrooms={classrooms} />
+      <AppSidebar role={role} classrooms={classrooms} />
       <main className="flex-1 overflow-y-auto bg-background">
         {children}
       </main>

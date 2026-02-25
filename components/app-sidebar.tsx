@@ -4,17 +4,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/components/logo'
 import { cn } from '@/lib/utils'
-import {
-  LayoutDashboard,
-  User,
-  LogOut,
-  Menu,
-  X,
-} from 'lucide-react'
+import { LogOut, Menu, X, LayoutDashboard, User } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
 import { signOut } from '@/lib/actions/auth'
-import { NotificationBell } from '@/components/notification-bell'
 
 interface NavItem {
   href: string
@@ -24,11 +16,10 @@ interface NavItem {
 
 interface AppSidebarProps {
   role: 'teacher' | 'student'
-  userId: string
   classrooms?: { id: string; name: string; cover_color: string }[]
 }
 
-export function AppSidebar({ role, userId, classrooms = [] }: AppSidebarProps) {
+export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -53,15 +44,7 @@ export function AppSidebar({ role, userId, classrooms = [] }: AppSidebarProps) {
         </button>
       </div>
 
-      {/* Real-time notification bell */}
-      <div className="px-4 pt-4 pb-1">
-        <div className="flex items-center gap-3 rounded-xl px-4 py-2">
-          <NotificationBell userId={userId} />
-          <span className="text-base font-medium text-sidebar-foreground/70">Notifications</span>
-        </div>
-      </div>
-
-      <nav className="flex-1 space-y-1 px-4 py-2">
+      <nav className="flex-1 space-y-1 px-4 py-4">
         {navItems.map((item) => (
           <Link
             key={item.href}
