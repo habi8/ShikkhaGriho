@@ -13,12 +13,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Plus, Loader2 } from 'lucide-react'
+import { Plus, Loader2, Check } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+const CLASSROOM_COLORS = [
+  '#1e40af', // Blue
+  '#15803d', // Green
+  '#b45309', // Orange
+  '#9f1239', // Red
+  '#6d28d9', // Purple
+  '#0e7490', // Cyan
+  '#be185d', // Pink
+  '#0f766e', // Teal
+]
 
 export function CreateClassroomDialog() {
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const [selectedColor, setSelectedColor] = useState(CLASSROOM_COLORS[0])
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -76,6 +89,28 @@ export function CreateClassroomDialog() {
               rows={2}
               className="text-base"
             />
+          </div>
+
+          <div className="space-y-2.5 pt-1">
+            <Label className="text-base">Theme Color</Label>
+            <div className="flex flex-wrap gap-3">
+              {CLASSROOM_COLORS.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => setSelectedColor(color)}
+                  className={cn(
+                    "flex h-8 w-8 items-center justify-center rounded-full ring-offset-2 transition-all hover:scale-110",
+                    selectedColor === color ? "ring-2 ring-primary scale-110 shadow-md" : "hover:ring-2 hover:ring-border opacity-90"
+                  )}
+                  style={{ backgroundColor: color }}
+                  aria-label={`Select color ${color}`}
+                >
+                  {selectedColor === color && <Check className="h-4 w-4 text-white" />}
+                </button>
+              ))}
+            </div>
+            <input type="hidden" name="cover_color" value={selectedColor} />
           </div>
 
           {error && (

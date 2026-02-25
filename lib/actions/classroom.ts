@@ -19,8 +19,9 @@ export async function createClassroom(formData: FormData) {
   const subject = formData.get('subject') as string
   const section = formData.get('section') as string
   const room = formData.get('room') as string
-  const colors = ['#1e40af', '#15803d', '#b45309', '#9f1239', '#6d28d9', '#0e7490']
-  const cover_color = colors[Math.floor(Math.random() * colors.length)]
+  const customColor = formData.get('cover_color') as string
+  const colors = ['#1e40af', '#15803d', '#b45309', '#9f1239', '#6d28d9', '#0e7490', '#be185d', '#0f766e']
+  const cover_color = customColor || colors[Math.floor(Math.random() * colors.length)]
   const invite_code = generateInviteCode()
 
   const { data, error } = await supabase
