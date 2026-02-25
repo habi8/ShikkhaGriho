@@ -88,7 +88,7 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
                 href={`/classroom/${c.id}`}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  'flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all',
+                  'flex items-center gap-3 rounded-xl px-4 py-2.5 text-base font-medium transition-all',
                   pathname.startsWith(`/classroom/${c.id}`)
                     ? 'bg-sidebar-accent text-sidebar-foreground'
                     : 'text-sidebar-foreground/60 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground'

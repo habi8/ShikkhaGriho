@@ -2,64 +2,88 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useActionState } from 'react'
-import { signUp } from '@/lib/actions/auth'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { AlertCircle, Loader2, GraduationCap, School } from 'lucide-react'
 
-const initialState = { error: null as string | null }
-
 export default function SignUpPage() {
-  const [state, formAction, isPending] = useActionState(
-    async (_prev: any, formData: FormData) => {
-      const result = await signUp(formData)
-      return result ?? { error: null }
-    },
-    initialState,
-  )
+  const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
+  const [isPending, setIsPending] = useState(false)
+  const [role, setRole] = useState<'student' | 'teacher'>('student')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setError(null)
+    setIsPending(true)
+
+    const form = new FormData(e.currentTarget)
+    const email = form.get('email') as string
+    const password = form.get('password') as string
+    const full_name = form.get('full_name') as string
+
+    const supabase = createClient()
+    const { error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name, role },
+      },
+    })
+
+    if (signUpError) {
+      setError(signUpError.message)
+      setIsPending(false)
+      return
+    }
+
+    router.push('/auth/sign-up-success')
+  }
 
   return (
     <main
       className="flex min-h-screen items-center justify-center p-4 py-10"
-      style={{ background: 'linear-gradient(135deg, oklch(0.22 0.06 255) 0%, oklch(0.29 0.08 255) 60%, oklch(0.32 0.09 220) 100%)' }}
+      style={{ background: 'linear-gradient(160deg, #e8f5e9 0%, #c8e6c9 50%, #dcedc8 100%)' }}
     >
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-4">
-          <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm ring-1 ring-white/20 shadow-xl">
+          <div className="rounded-2xl bg-white/70 p-4 ring-1 ring-green-200 shadow-lg">
             <Image
               src="/images/logo.png"
               alt="ShikkhaGriho"
-              width={100}
-              height={100}
+              width={110}
+              height={110}
               className="object-contain"
               priority
             />
           </div>
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white tracking-tight">ShikkhaGriho</h1>
-            <p className="text-base text-white/70 mt-1">শিক্ষা গৃহ — Join your classroom today</p>
+            <h1 className="text-4xl font-extrabold text-green-900 tracking-tight">ShikkhaGriho</h1>
+            <p className="text-base text-green-700/80 mt-1 font-medium">শিক্ষা গৃহ — Join your classroom today</p>
           </div>
         </div>
 
-        <Card className="border-0 shadow-2xl rounded-2xl bg-white/95 backdrop-blur-sm">
-          <CardHeader className="pb-4 pt-6 px-7">
-            <CardTitle className="text-2xl font-bold text-foreground">Create an account</CardTitle>
-            <CardDescription className="text-base text-muted-foreground">Fill in the details below to get started</CardDescription>
+        <Card className="border-0 shadow-2xl rounded-2xl bg-white/95">
+          <CardHeader className="pb-4 pt-7 px-8">
+            <CardTitle className="text-3xl font-extrabold text-foreground">Create an account</CardTitle>
+            <CardDescription className="text-base text-muted-foreground mt-1">Fill in the details below to get started</CardDescription>
           </CardHeader>
-          <form action={formAction}>
-            <CardContent className="space-y-5 px-7">
-              {state?.error && (
-                <div className="flex items-center gap-2.5 rounded-lg bg-destructive/10 border border-destructive/20 p-3.5 text-sm text-destructive">
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-5 px-8">
+              {error && (
+                <div className="flex items-center gap-2.5 rounded-xl bg-destructive/10 border border-destructive/20 p-3.5 text-sm text-destructive">
                   <AlertCircle className="h-4 w-4 shrink-0" />
-                  <span>{state.error}</span>
+                  <span>{error}</span>
                 </div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="full_name" className="text-sm font-semibold text-foreground">Full name</Label>
+                <Label htmlFor="full_name" className="text-base font-semibold text-foreground">Full name</Label>
                 <Input
                   id="full_name"
                   name="full_name"
@@ -67,11 +91,11 @@ export default function SignUpPage() {
                   placeholder="Your full name"
                   required
                   autoComplete="name"
-                  className="h-11 text-base rounded-lg"
+                  className="h-12 text-base rounded-xl"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-semibold text-foreground">Email address</Label>
+                <Label htmlFor="email" className="text-base font-semibold text-foreground">Email address</Label>
                 <Input
                   id="email"
                   name="email"
@@ -79,11 +103,11 @@ export default function SignUpPage() {
                   placeholder="you@example.com"
                   required
                   autoComplete="email"
-                  className="h-11 text-base rounded-lg"
+                  className="h-12 text-base rounded-xl"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-semibold text-foreground">Password</Label>
+                <Label htmlFor="password" className="text-base font-semibold text-foreground">Password</Label>
                 <Input
                   id="password"
                   name="password"
@@ -92,32 +116,54 @@ export default function SignUpPage() {
                   required
                   minLength={6}
                   autoComplete="new-password"
-                  className="h-11 text-base rounded-lg"
+                  className="h-12 text-base rounded-xl"
                 />
               </div>
 
               {/* Role selection */}
               <fieldset className="space-y-2.5">
-                <legend className="text-sm font-semibold text-foreground">I am a...</legend>
+                <legend className="text-base font-semibold text-foreground">I am a...</legend>
                 <div className="grid grid-cols-2 gap-3">
-                  <label className="relative flex cursor-pointer flex-col items-center gap-2.5 rounded-xl border-2 border-border p-4 hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-sm">
-                    <input type="radio" name="role" value="student" className="sr-only" defaultChecked />
+                  <label
+                    className={`relative flex cursor-pointer flex-col items-center gap-2.5 rounded-xl border-2 p-4 transition-all ${
+                      role === 'student' ? 'border-primary bg-primary/5 shadow-sm' : 'border-border hover:border-primary/50'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value="student"
+                      className="sr-only"
+                      checked={role === 'student'}
+                      onChange={() => setRole('student')}
+                    />
                     <GraduationCap className="h-7 w-7 text-primary" />
-                    <span className="text-sm font-semibold text-foreground">Student</span>
+                    <span className="text-base font-semibold text-foreground">Student</span>
                   </label>
-                  <label className="relative flex cursor-pointer flex-col items-center gap-2.5 rounded-xl border-2 border-border p-4 hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-sm">
-                    <input type="radio" name="role" value="teacher" className="sr-only" />
+                  <label
+                    className={`relative flex cursor-pointer flex-col items-center gap-2.5 rounded-xl border-2 p-4 transition-all ${
+                      role === 'teacher' ? 'border-primary bg-primary/5 shadow-sm' : 'border-border hover:border-primary/50'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value="teacher"
+                      className="sr-only"
+                      checked={role === 'teacher'}
+                      onChange={() => setRole('teacher')}
+                    />
                     <School className="h-7 w-7 text-primary" />
-                    <span className="text-sm font-semibold text-foreground">Teacher</span>
+                    <span className="text-base font-semibold text-foreground">Teacher</span>
                   </label>
                 </div>
               </fieldset>
             </CardContent>
-            <CardFooter className="flex flex-col gap-4 px-7 pb-7">
+            <CardFooter className="flex flex-col gap-4 px-8 pb-8 pt-2">
               <Button
                 type="submit"
                 disabled={isPending}
-                className="w-full h-11 text-base font-semibold rounded-lg shadow-md"
+                className="w-full h-12 text-base font-bold rounded-xl"
               >
                 {isPending ? (
                   <span className="flex items-center gap-2">
@@ -128,9 +174,9 @@ export default function SignUpPage() {
                   'Create account'
                 )}
               </Button>
-              <p className="text-sm text-muted-foreground text-center">
+              <p className="text-base text-muted-foreground text-center">
                 Already have an account?{' '}
-                <Link href="/auth/login" className="text-primary font-semibold hover:underline">
+                <Link href="/auth/login" className="text-primary font-bold hover:underline">
                   Sign in
                 </Link>
               </p>

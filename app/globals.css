@@ -78,7 +78,7 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback';
+  --font-sans: 'Nunito', 'Nunito Fallback';
   --font-display: 'Hind Siliguri', 'Hind Siliguri Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
