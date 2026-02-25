@@ -44,13 +44,13 @@ export default async function StudentDashboardPage() {
     <div className="p-6 sm:p-8 max-w-6xl mx-auto">
       {/* Colored header banner */}
       <div className="mb-8 rounded-2xl px-7 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        style={{ background: 'linear-gradient(120deg, oklch(0.35 0.13 155) 0%, oklch(0.42 0.12 175) 100%)' }}>
+        style={{ background: 'linear-gradient(120deg, oklch(0.56 0.13 155) 0%, oklch(0.62 0.12 145) 100%)' }}>
         <div>
           <p className="text-sm font-semibold text-white/60 uppercase tracking-widest mb-1">Student Dashboard</p>
           <h1 className="text-3xl font-bold text-white">
             Welcome back, {firstName}
           </h1>
-          <p className="mt-1.5 text-base text-white/70">
+          <p className="mt-1.5 text-base text-white/80">
             You are enrolled in {classrooms.length} classroom{classrooms.length !== 1 ? 's' : ''}
           </p>
         </div>

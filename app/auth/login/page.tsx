@@ -42,12 +42,12 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center p-4"
-      style={{ background: 'linear-gradient(160deg, #e8f5e9 0%, #c8e6c9 50%, #dcedc8 100%)' }}>
+      style={{ background: 'linear-gradient(160deg, #fffde7 0%, #fff9c4 50%, #fef9e7 100%)' }}>
       <div className="w-full max-w-md">
 
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-4">
-          <div className="rounded-2xl bg-white/70 p-4 backdrop-blur-sm ring-1 ring-green-200 shadow-lg">
+          <div className="rounded-2xl bg-white/80 p-4 backdrop-blur-sm ring-2 ring-yellow-200 shadow-xl">
             <Image
               src="/images/logo.png"
               alt="ShikkhaGriho"
@@ -58,8 +58,8 @@ export default function LoginPage() {
             />
           </div>
           <div className="text-center">
-            <h1 className="text-4xl font-extrabold text-green-900 tracking-tight">ShikkhaGriho</h1>
-            <p className="text-base text-green-700/80 mt-1 font-medium">শিক্ষা গৃহ — Your Classroom, Your Way</p>
+            <h1 className="text-4xl font-extrabold text-amber-900 tracking-tight">ShikkhaGriho</h1>
+            <p className="text-base text-amber-700/80 mt-1 font-medium">শিক্ষা গৃহ — Your Classroom, Your Way</p>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ export default function LoginPage() {
               </Button>
               <p className="text-base text-muted-foreground text-center">
                 Don&apos;t have an account?{' '}
-                <Link href="/auth/sign-up" className="text-primary font-bold hover:underline">
+                <Link href="/auth/sign-up" className="text-accent font-bold hover:underline">
                   Create one
                 </Link>
               </p>

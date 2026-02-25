@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Nunito, Hind_Siliguri, Geist_Mono } from 'next/font/google'
+import { IBM_Plex_Mono, Hind_Siliguri } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const nunito = Nunito({
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-sans',
 })
 const hindSiliguri = Hind_Siliguri({
@@ -13,7 +13,6 @@ const hindSiliguri = Hind_Siliguri({
   weight: ['400', '500', '600', '700'],
   variable: '--font-display',
 })
-const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
 export const metadata: Metadata = {
   title: 'ShikkhaGriho — শিক্ষা গৃহ',
@@ -31,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
-      <body className={`${nunito.variable} ${hindSiliguri.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${ibmPlexMono.variable} ${hindSiliguri.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
         <Analytics />
       </body>
