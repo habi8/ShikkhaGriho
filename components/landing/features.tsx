@@ -1,76 +1,59 @@
-import {
-  Megaphone,
-  ClipboardCheck,
-  Users,
-  KeyRound,
-  Bell,
-  ShieldCheck,
-} from 'lucide-react'
+import { Library, Megaphone, Users, ClipboardCheck, Bell, Globe } from 'lucide-react'
 
 const features = [
   {
-    icon: <Megaphone className="h-6 w-6" />,
-    title: 'Announcements',
-    description:
-      'Post updates, homework, and class notes. Students can reply with comments in real time.',
+    icon: <Library className="h-7 w-7" />,
+    title: 'Classroom Management',
+    description: 'Create and manage multiple classrooms with ease.',
   },
   {
-    icon: <ClipboardCheck className="h-6 w-6" />,
+    icon: <Megaphone className="h-7 w-7" />,
+    title: 'Announcements & Resources',
+    description: 'Share updates, meeting links, and downloadable files.',
+  },
+  {
+    icon: <Users className="h-7 w-7" />,
+    title: 'Smart Member System',
+    description: 'Add students via email, username, or invitation link.',
+  },
+  {
+    icon: <ClipboardCheck className="h-7 w-7" />,
     title: 'Attendance Tracking',
-    description:
-      'Create attendance sessions, mark students present, absent, or late, and keep detailed records.',
+    description: 'Open attendance, let students mark presence, verify instantly.',
   },
   {
-    icon: <Users className="h-6 w-6" />,
-    title: 'Member Management',
-    description:
-      'See who is in your classroom, remove students when needed, and keep rosters up to date.',
+    icon: <Bell className="h-7 w-7" />,
+    title: 'Real-Time Notifications',
+    description: 'Stay updated on comments, announcements, and invites.',
   },
   {
-    icon: <KeyRound className="h-6 w-6" />,
-    title: 'Easy Join Codes',
-    description:
-      'Share a unique 7-character code with students. They join in seconds — no email invites needed.',
-  },
-  {
-    icon: <Bell className="h-6 w-6" />,
-    title: 'Notifications',
-    description:
-      'Students and teachers are notified of new announcements, replies, and classroom activity.',
-  },
-  {
-    icon: <ShieldCheck className="h-6 w-6" />,
-    title: 'Role-based Access',
-    description:
-      'Teachers have full control. Students see only what they need. Secure by design with Supabase RLS.',
+    icon: <Globe className="h-7 w-7" />,
+    title: 'Dual Language Support',
+    description: 'Seamless English & Bangla experience.',
   },
 ]
 
 export function Features() {
   return (
-    <section className="py-20 sm:py-28 bg-background">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl text-balance">
-            Everything you need to run your classroom
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-xl mx-auto text-pretty leading-relaxed">
-            Designed for teachers and students in Bangladesh, ShikkhaGriho provides all the tools
-            for a smooth digital classroom experience.
-          </p>
-        </div>
+    <section id="features" className="py-20 sm:py-24 bg-[#F8FAFC]">
+      <div className="mx-auto max-w-6xl px-6">
+        <h2 className="text-center text-3xl font-bold text-[#1E3A8A] sm:text-4xl mb-12">
+          Powerful Classroom Tools
+        </h2>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group rounded-xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-sm transition-all"
+              className="rounded-xl border border-[#E2E8F0] bg-white p-6 hover:shadow-md transition-shadow"
             >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                {feature.icon}
+              <div className="mb-4 flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#1E3A8A] shrink-0">
+                  {feature.icon}
+                </div>
+                <h3 className="text-base font-bold text-[#0F172A] leading-snug">{feature.title}</h3>
               </div>
-              <h3 className="mb-2 font-semibold text-foreground">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+              <p className="text-sm text-[#475569] leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>
