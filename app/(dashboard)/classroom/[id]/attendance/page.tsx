@@ -27,32 +27,24 @@ const statusColors: Record<string, string> = {
 export default async function AttendancePage({ params }: PageProps) {
   const { id } = await params
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/auth/login')
+  const [
+    { data: { user } },
+    { data: classroom },
+    { data: sessions },
+    { data: members }
+  ] = await Promise.all([
+    supabase.auth.getUser(),
+    supabase.from('classrooms').select('teacher_id').eq('id', id).single(),
+    supabase.from('attendance_sessions').select('*').eq('classroom_id', id).order('date', { ascending: false }),
+    supabase.from('classroom_members').select('student_id, profiles(id, full_name)').eq('classroom_id', id)
+  ])
 
-  const { data: classroom } = await supabase
-    .from('classrooms')
-    .select('teacher_id')
-    .eq('id', id)
-    .single()
+  if (!user) redirect('/auth/login')
 
   const isTeacher = classroom?.teacher_id === user.id
 
-  // Get sessions
-  const { data: sessions } = await supabase
-    .from('attendance_sessions')
-    .select('*')
-    .eq('classroom_id', id)
-    .order('date', { ascending: false })
-
-  // Get members (students) for marking
-  const { data: members } = await supabase
-    .from('classroom_members')
-    .select('user_id, profiles(id, full_name)')
-    .eq('classroom_id', id)
-
   const students = (members ?? []).map((m: any) => ({
-    user_id: m.user_id,
+    student_id: m.student_id,
     full_name: m.profiles?.full_name ?? 'Unknown',
   }))
 
@@ -123,9 +115,9 @@ export default async function AttendancePage({ params }: PageProps) {
           {isTeacher && students.length > 0 && (
             <div className="space-y-2">
               {students.map((student) => {
-                const currentStatus = openRecords[student.user_id]
+                const currentStatus = openRecords[student.student_id]
                 return (
-                  <div key={student.user_id} className="flex items-center justify-between rounded-lg bg-card border border-border p-3">
+                  <div key={student.student_id} className="flex items-center justify-between rounded-lg bg-card border border-border p-3">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8">
                         <AvatarFallback className="bg-muted text-xs">{initials(student.full_name)}</AvatarFallback>
@@ -136,16 +128,15 @@ export default async function AttendancePage({ params }: PageProps) {
                       {(['present', 'late', 'absent'] as const).map((status) => (
                         <form key={status} action={markAttendance}>
                           <input type="hidden" name="session_id" value={openSession.id} />
-                          <input type="hidden" name="student_id" value={student.user_id} />
+                          <input type="hidden" name="student_id" value={student.student_id} />
                           <input type="hidden" name="status" value={status} />
                           <input type="hidden" name="classroom_id" value={id} />
                           <button
                             type="submit"
-                            className={`rounded px-2.5 py-1 text-xs font-medium border transition-all ${
-                              currentStatus === status
-                                ? statusColors[status]
-                                : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
-                            }`}
+                            className={`rounded px-2.5 py-1 text-xs font-medium border transition-all ${currentStatus === status
+                              ? statusColors[status]
+                              : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
+                              }`}
                           >
                             {status.charAt(0).toUpperCase() + status.slice(1)}
                           </button>

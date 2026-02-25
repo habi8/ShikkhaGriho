@@ -18,31 +18,21 @@ export default async function ProfilePage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single()
-
   const role = user.user_metadata?.role as string
+
+  // Parallelize fetching profile data and computing classroom count
+  const [profileRes, countRes] = await Promise.all([
+    supabase.from('profiles').select('*').eq('id', user.id).single(),
+    role === 'teacher'
+      ? supabase.from('classrooms').select('id', { count: 'exact', head: true }).eq('teacher_id', user.id)
+      : supabase.from('classroom_members').select('id', { count: 'exact', head: true }).eq('student_id', user.id),
+  ])
+
+  const profile = profileRes.data
+  const classroomCount = countRes.count ?? 0
+
   const fullName = profile?.full_name ?? user.user_metadata?.full_name ?? 'User'
   const createdAt = profile?.created_at ?? user.created_at
-
-  // Count classrooms
-  let classroomCount = 0
-  if (role === 'teacher') {
-    const { count } = await supabase
-      .from('classrooms')
-      .select('id', { count: 'exact', head: true })
-      .eq('teacher_id', user.id)
-    classroomCount = count ?? 0
-  } else {
-    const { count } = await supabase
-      .from('classroom_members')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-    classroomCount = count ?? 0
-  }
 
   return (
     <div className="p-6 sm:p-8 max-w-xl mx-auto">

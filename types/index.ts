@@ -26,7 +26,7 @@ export interface Classroom {
 export interface ClassroomMember {
   id: string
   classroom_id: string
-  user_id: string
+  student_id: string
   joined_at: string
   profile?: Profile
 }

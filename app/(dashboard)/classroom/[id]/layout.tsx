@@ -10,26 +10,29 @@ interface ClassroomLayoutProps {
 export default async function ClassroomLayout({ children, params }: ClassroomLayoutProps) {
   const { id } = await params
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+
+  // Run auth + classroom fetch in parallel
+  const [{ data: { user } }, { data: classroom }] = await Promise.all([
+    supabase.auth.getUser(),
+    supabase
+      .from('classrooms')
+      .select('*, profiles!classrooms_teacher_id_fkey(id, full_name, avatar_url, role, created_at)')
+      .eq('id', id)
+      .single(),
+  ])
+
   if (!user) redirect('/auth/login')
-
-  const { data: classroom } = await supabase
-    .from('classrooms')
-    .select('*, profiles!classrooms_teacher_id_fkey(id, full_name, avatar_url, role, created_at)')
-    .eq('id', id)
-    .single()
-
   if (!classroom) notFound()
 
   const isTeacher = classroom.teacher_id === user.id
 
-  // Verify student membership
+  // Verify student membership (only if not teacher)
   if (!isTeacher) {
     const { data: member } = await supabase
       .from('classroom_members')
       .select('id')
       .eq('classroom_id', id)
-      .eq('user_id', user.id)
+      .eq('student_id', user.id)
       .single()
     if (!member) redirect('/student-dashboard')
   }

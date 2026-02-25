@@ -19,7 +19,7 @@ export async function createClassroom(formData: FormData) {
   const subject = formData.get('subject') as string
   const section = formData.get('section') as string
   const room = formData.get('room') as string
-  const colors = ['#1e40af','#15803d','#b45309','#9f1239','#6d28d9','#0e7490']
+  const colors = ['#1e40af', '#15803d', '#b45309', '#9f1239', '#6d28d9', '#0e7490']
   const cover_color = colors[Math.floor(Math.random() * colors.length)]
   const invite_code = generateInviteCode()
 
@@ -42,26 +42,25 @@ export async function joinClassroom(formData: FormData) {
 
   const invite_code = (formData.get('invite_code') as string).toUpperCase().trim()
 
-  const { data: classroom, error: classroomError } = await supabase
-    .from('classrooms')
-    .select('id')
-    .eq('invite_code', invite_code)
-    .single()
+  // Use RPC to bypass RLS – students aren't members yet so they can't
+  // query the classrooms table directly.
+  const { data: classroomId, error: lookupError } = await supabase
+    .rpc('lookup_classroom_by_invite', { p_invite_code: invite_code })
 
-  if (classroomError || !classroom) {
+  if (lookupError || !classroomId) {
     return { error: 'Invalid invite code. Please check and try again.' }
   }
 
   const { error: memberError } = await supabase
     .from('classroom_members')
-    .insert({ classroom_id: classroom.id, user_id: user.id })
+    .insert({ classroom_id: classroomId, student_id: user.id })
 
   if (memberError && memberError.code !== '23505') {
     return { error: 'Could not join classroom. You may already be a member.' }
   }
 
   revalidatePath('/student-dashboard')
-  redirect(`/classroom/${classroom.id}`)
+  redirect(`/classroom/${classroomId}`)
 }
 
 export async function postAnnouncement(formData: FormData) {
@@ -110,7 +109,7 @@ export async function createAttendanceSession(formData: FormData) {
 
   const { data, error } = await supabase
     .from('attendance_sessions')
-    .insert({ classroom_id, title, date, created_by: user.id, is_open: true })
+    .insert({ classroom_id, title, date, created_by: user.id, teacher_id: user.id, is_open: true })
     .select()
     .single()
 
@@ -147,7 +146,7 @@ export async function removeMember(user_id: string, classroom_id: string) {
   await supabase
     .from('classroom_members')
     .delete()
-    .eq('user_id', user_id)
+    .eq('student_id', user_id)
     .eq('classroom_id', classroom_id)
   revalidatePath(`/classroom/${classroom_id}`)
 }

@@ -29,7 +29,7 @@ export default async function DashboardLayout({
     const { data } = await supabase
       .from('classroom_members')
       .select('classrooms(id, name, cover_color)')
-      .eq('user_id', userId)
+      .eq('student_id', userId)
     classrooms = (data ?? [])
       .map((m: any) => m.classrooms)
       .filter(Boolean)
@@ -37,7 +37,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <AppSidebar role={role} classrooms={classrooms} />
+      <AppSidebar role={role} userId={userId} classrooms={classrooms} />
       <main className="flex-1 overflow-y-auto bg-background">
         {children}
       </main>

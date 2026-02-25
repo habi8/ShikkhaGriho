@@ -1,4 +1,39 @@
 -- ShikkhaGriho Row Level Security Policies
+-- Run AFTER 001_schema.sql
+
+-- ============================================================
+-- HELPER FUNCTIONS (SECURITY DEFINER – bypass RLS internally)
+-- These break the circular dependency between classrooms and
+-- classroom_members when their respective RLS policies evaluate.
+-- ============================================================
+
+CREATE OR REPLACE FUNCTION public.is_classroom_teacher(p_classroom_id UUID, p_user_id UUID)
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.classrooms
+    WHERE id = p_classroom_id AND teacher_id = p_user_id
+  );
+$$;
+
+CREATE OR REPLACE FUNCTION public.is_classroom_member(p_classroom_id UUID, p_user_id UUID)
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.classroom_members
+    WHERE classroom_id = p_classroom_id
+      AND student_id = p_user_id
+      AND is_banned = FALSE
+  );
+$$;
 
 -- ============================================================
 -- PROFILES
@@ -16,17 +51,15 @@ CREATE POLICY "profiles_select_for_members" ON public.profiles FOR SELECT
     EXISTS (
       SELECT 1 FROM public.classroom_members cm
       WHERE cm.student_id = public.profiles.id
-        AND cm.classroom_id IN (
-          SELECT id FROM public.classrooms WHERE teacher_id = auth.uid()
-          UNION
-          SELECT classroom_id FROM public.classroom_members WHERE student_id = auth.uid()
+        AND (
+          public.is_classroom_teacher(cm.classroom_id, auth.uid())
+          OR public.is_classroom_member(cm.classroom_id, auth.uid())
         )
     )
     OR EXISTS (
-      SELECT 1 FROM public.classrooms WHERE teacher_id = public.profiles.id
-        AND id IN (
-          SELECT classroom_id FROM public.classroom_members WHERE student_id = auth.uid()
-        )
+      SELECT 1 FROM public.classrooms c
+      WHERE c.teacher_id = public.profiles.id
+        AND public.is_classroom_member(c.id, auth.uid())
     )
   );
 
@@ -40,12 +73,7 @@ CREATE POLICY "classrooms_teacher_all" ON public.classrooms
 
 CREATE POLICY "classrooms_member_select" ON public.classrooms FOR SELECT
   USING (
-    EXISTS (
-      SELECT 1 FROM public.classroom_members
-      WHERE classroom_id = public.classrooms.id
-        AND student_id = auth.uid()
-        AND is_banned = FALSE
-    )
+    public.is_classroom_member(id, auth.uid())
   );
 
 -- ============================================================
@@ -56,22 +84,22 @@ ALTER TABLE public.classroom_members ENABLE ROW LEVEL SECURITY;
 -- Teacher can see all members of their classrooms
 CREATE POLICY "members_teacher_select" ON public.classroom_members FOR SELECT
   USING (
-    EXISTS (SELECT 1 FROM public.classrooms WHERE id = classroom_id AND teacher_id = auth.uid())
+    public.is_classroom_teacher(classroom_id, auth.uid())
   );
 
 -- Students can see members of classrooms they belong to
 CREATE POLICY "members_student_select" ON public.classroom_members FOR SELECT
   USING (
-    EXISTS (SELECT 1 FROM public.classroom_members cm WHERE cm.classroom_id = public.classroom_members.classroom_id AND cm.student_id = auth.uid())
+    public.is_classroom_member(classroom_id, auth.uid())
   );
 
 -- Teacher can manage members
 CREATE POLICY "members_teacher_all" ON public.classroom_members FOR ALL
   USING (
-    EXISTS (SELECT 1 FROM public.classrooms WHERE id = classroom_id AND teacher_id = auth.uid())
+    public.is_classroom_teacher(classroom_id, auth.uid())
   )
   WITH CHECK (
-    EXISTS (SELECT 1 FROM public.classrooms WHERE id = classroom_id AND teacher_id = auth.uid())
+    public.is_classroom_teacher(classroom_id, auth.uid())
   );
 
 -- Students can join (insert themselves)
@@ -89,14 +117,14 @@ ALTER TABLE public.announcements ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "announcements_select" ON public.announcements FOR SELECT
   USING (
-    EXISTS (SELECT 1 FROM public.classrooms WHERE id = classroom_id AND teacher_id = auth.uid())
-    OR EXISTS (SELECT 1 FROM public.classroom_members WHERE classroom_id = public.announcements.classroom_id AND student_id = auth.uid() AND is_banned = FALSE)
+    public.is_classroom_teacher(classroom_id, auth.uid())
+    OR public.is_classroom_member(classroom_id, auth.uid())
   );
 
 CREATE POLICY "announcements_teacher_insert" ON public.announcements FOR INSERT
   WITH CHECK (
     author_id = auth.uid()
-    AND EXISTS (SELECT 1 FROM public.classrooms WHERE id = classroom_id AND teacher_id = auth.uid())
+    AND public.is_classroom_teacher(classroom_id, auth.uid())
   );
 
 CREATE POLICY "announcements_teacher_update" ON public.announcements FOR UPDATE
@@ -116,8 +144,8 @@ CREATE POLICY "comments_select" ON public.comments FOR SELECT
       SELECT 1 FROM public.announcements a
       WHERE a.id = announcement_id
         AND (
-          EXISTS (SELECT 1 FROM public.classrooms WHERE id = a.classroom_id AND teacher_id = auth.uid())
-          OR EXISTS (SELECT 1 FROM public.classroom_members WHERE classroom_id = a.classroom_id AND student_id = auth.uid() AND is_banned = FALSE)
+          public.is_classroom_teacher(a.classroom_id, auth.uid())
+          OR public.is_classroom_member(a.classroom_id, auth.uid())
         )
     )
   );
@@ -129,8 +157,8 @@ CREATE POLICY "comments_insert" ON public.comments FOR INSERT
       SELECT 1 FROM public.announcements a
       WHERE a.id = announcement_id
         AND (
-          EXISTS (SELECT 1 FROM public.classrooms WHERE id = a.classroom_id AND teacher_id = auth.uid())
-          OR EXISTS (SELECT 1 FROM public.classroom_members WHERE classroom_id = a.classroom_id AND student_id = auth.uid() AND is_banned = FALSE)
+          public.is_classroom_teacher(a.classroom_id, auth.uid())
+          OR public.is_classroom_member(a.classroom_id, auth.uid())
         )
     )
   );
@@ -147,7 +175,7 @@ CREATE POLICY "attendance_sessions_teacher_all" ON public.attendance_sessions
 
 CREATE POLICY "attendance_sessions_member_select" ON public.attendance_sessions FOR SELECT
   USING (
-    EXISTS (SELECT 1 FROM public.classroom_members WHERE classroom_id = public.attendance_sessions.classroom_id AND student_id = auth.uid() AND is_banned = FALSE)
+    public.is_classroom_member(classroom_id, auth.uid())
   );
 
 -- ============================================================
@@ -160,15 +188,13 @@ CREATE POLICY "attendance_records_teacher_all" ON public.attendance_records
   USING (
     EXISTS (
       SELECT 1 FROM public.attendance_sessions s
-      JOIN public.classrooms c ON c.id = s.classroom_id
-      WHERE s.id = session_id AND c.teacher_id = auth.uid()
+      WHERE s.id = session_id AND s.teacher_id = auth.uid()
     )
   )
   WITH CHECK (
     EXISTS (
       SELECT 1 FROM public.attendance_sessions s
-      JOIN public.classrooms c ON c.id = s.classroom_id
-      WHERE s.id = session_id AND c.teacher_id = auth.uid()
+      WHERE s.id = session_id AND s.teacher_id = auth.uid()
     )
   );
 
@@ -208,8 +234,8 @@ ALTER TABLE public.pending_invites ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "pending_invites_teacher_all" ON public.pending_invites
   FOR ALL
   USING (
-    EXISTS (SELECT 1 FROM public.classrooms WHERE id = classroom_id AND teacher_id = auth.uid())
+    public.is_classroom_teacher(classroom_id, auth.uid())
   )
   WITH CHECK (
-    EXISTS (SELECT 1 FROM public.classrooms WHERE id = classroom_id AND teacher_id = auth.uid())
+    public.is_classroom_teacher(classroom_id, auth.uid())
   );

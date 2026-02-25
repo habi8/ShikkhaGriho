@@ -19,30 +19,28 @@ function initials(name: string | null) {
 export default async function MembersPage({ params }: PageProps) {
   const { id } = await params
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const [
+    { data: { user } },
+    { data: classroom },
+    { data: members }
+  ] = await Promise.all([
+    supabase.auth.getUser(),
+    supabase
+      .from('classrooms')
+      .select('teacher_id, invite_code, name, profiles!classrooms_teacher_id_fkey(*)')
+      .eq('id', id)
+      .single(),
+    supabase
+      .from('classroom_members')
+      .select('*, profiles(*)')
+      .eq('classroom_id', id)
+      .order('joined_at', { ascending: true })
+  ])
+
   if (!user) redirect('/auth/login')
 
-  const { data: classroom } = await supabase
-    .from('classrooms')
-    .select('teacher_id, invite_code, name')
-    .eq('id', id)
-    .single()
-
   const isTeacher = classroom?.teacher_id === user.id
-
-  // Teacher profile
-  const { data: teacherProfile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', classroom?.teacher_id)
-    .single()
-
-  // Student members
-  const { data: members } = await supabase
-    .from('classroom_members')
-    .select('*, profiles(*)')
-    .eq('classroom_id', id)
-    .order('joined_at', { ascending: true })
+  const teacherProfile = classroom?.profiles as any
 
   const students = (members ?? []).map((m: any) => ({ ...m, profile: m.profiles }))
 
@@ -111,7 +109,7 @@ export default async function MembersPage({ params }: PageProps) {
                 <form
                   action={async () => {
                     'use server'
-                    await removeMember(member.user_id, id)
+                    await removeMember(member.student_id, id)
                   }}
                 >
                   <Button type="submit" variant="ghost" size="sm" className="text-destructive hover:text-destructive">

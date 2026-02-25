@@ -6,8 +6,6 @@ import { Logo } from '@/components/logo'
 import { cn } from '@/lib/utils'
 import {
   LayoutDashboard,
-  BookOpen,
-  Bell,
   User,
   LogOut,
   Menu,
@@ -16,6 +14,7 @@ import {
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { signOut } from '@/lib/actions/auth'
+import { NotificationBell } from '@/components/notification-bell'
 
 interface NavItem {
   href: string
@@ -25,10 +24,11 @@ interface NavItem {
 
 interface AppSidebarProps {
   role: 'teacher' | 'student'
+  userId: string
   classrooms?: { id: string; name: string; cover_color: string }[]
 }
 
-export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
+export function AppSidebar({ role, userId, classrooms = [] }: AppSidebarProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -36,7 +36,6 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
 
   const navItems: NavItem[] = [
     { href: dashboardHref, label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
-    { href: '/notifications', label: 'Notifications', icon: <Bell className="h-5 w-5" /> },
     { href: '/profile', label: 'Profile', icon: <User className="h-5 w-5" /> },
   ]
 
@@ -44,7 +43,7 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
     <aside className="flex h-full w-72 flex-col bg-sidebar text-sidebar-foreground">
       {/* Logo header with decorative accent */}
       <div className="flex items-center justify-between px-5 py-5 border-b border-sidebar-border/50">
-        <Logo size={52} href={dashboardHref} textColor="#F8FAFC" />
+        <Logo size={40} href={dashboardHref} textColor="#F8FAFC" logoBg />
         <button
           className="md:hidden text-sidebar-foreground/60 hover:text-sidebar-foreground"
           onClick={() => setMobileOpen(false)}
@@ -54,7 +53,15 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
         </button>
       </div>
 
-      <nav className="flex-1 space-y-1 px-4 py-4">
+      {/* Real-time notification bell */}
+      <div className="px-4 pt-4 pb-1">
+        <div className="flex items-center gap-3 rounded-xl px-4 py-2">
+          <NotificationBell userId={userId} />
+          <span className="text-base font-medium text-sidebar-foreground/70">Notifications</span>
+        </div>
+      </div>
+
+      <nav className="flex-1 space-y-1 px-4 py-2">
         {navItems.map((item) => (
           <Link
             key={item.href}

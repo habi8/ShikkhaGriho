@@ -24,7 +24,7 @@ export default async function StudentDashboardPage() {
         classroom_members(count)
       )
     `)
-    .eq('user_id', user.id)
+    .eq('student_id', user.id)
 
   const classrooms: Classroom[] = (memberships ?? [])
     .map((m: any) => {
