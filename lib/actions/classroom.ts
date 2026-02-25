@@ -158,4 +158,19 @@ export async function deleteClassroom(classroom_id: string) {
   revalidatePath('/teacher-dashboard')
   redirect('/teacher-dashboard')
 }
+export async function leaveClassroom(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/auth/login')
 
+  const classroom_id = formData.get('classroom_id') as string
+
+  await supabase
+    .from('classroom_members')
+    .delete()
+    .eq('student_id', user.id)
+    .eq('classroom_id', classroom_id)
+
+  revalidatePath('/student-dashboard')
+  redirect('/student-dashboard')
+}

@@ -20,7 +20,7 @@ export function ClassroomCard({ classroom, role }: ClassroomCardProps) {
       >
         {/* Subtle overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-        <h3 className="relative text-xl font-bold text-white leading-snug text-balance line-clamp-2 drop-shadow-sm">
+        <h3 className="relative text-2xl font-bold text-white leading-snug text-balance line-clamp-2 drop-shadow-sm">
           {classroom.name}
         </h3>
       </div>
@@ -28,23 +28,23 @@ export function ClassroomCard({ classroom, role }: ClassroomCardProps) {
       {/* Body */}
       <div className="p-5">
         {classroom.subject && (
-          <p className="text-base font-medium text-foreground mb-0.5">{classroom.subject}</p>
+          <p className="text-lg font-medium text-foreground mb-0.5">{classroom.subject}</p>
         )}
         {classroom.section && (
-          <p className="text-sm text-muted-foreground">{classroom.section}</p>
+          <p className="text-base text-muted-foreground">{classroom.section}</p>
         )}
         {classroom.teacher && role === 'student' && (
-          <p className="mt-2 text-sm text-muted-foreground font-medium">
+          <p className="mt-2 text-base text-muted-foreground font-medium">
             {classroom.teacher.full_name}
           </p>
         )}
 
         <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-base text-muted-foreground">
             <Users className="h-4 w-4" />
             <span>{classroom.member_count ?? 0} students</span>
           </div>
-          <div className="flex items-center gap-2 text-sm font-semibold text-accent">
+          <div className="flex items-center gap-2 text-base font-semibold text-accent">
             <BookOpen className="h-4 w-4" />
             <span>Open</span>
           </div>

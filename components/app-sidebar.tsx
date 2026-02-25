@@ -99,7 +99,7 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
         <form action={signOut}>
           <button
             type="submit"
-            className="flex w-full items-center gap-3.5 rounded-xl px-4 py-3 text-base font-medium text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-all"
+            className="flex w-full items-center gap-3.5 rounded-xl px-4 py-3 text-base font-medium text-sidebar-foreground/60 hover:bg-destructive/10 hover:text-destructive transition-all hover:scale-[1.02] cursor-pointer"
           >
             <LogOut className="h-4 w-4 shrink-0" />
             Sign out

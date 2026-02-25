@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Classroom } from '@/types'
+import { leaveClassroom } from '@/lib/actions/classroom'
+import { LogOut } from 'lucide-react'
 
 interface ClassroomHeaderProps {
   classroom: Classroom
@@ -30,14 +32,14 @@ export function ClassroomHeader({ classroom, isTeacher }: ClassroomHeaderProps) 
         className="px-6 pt-8 pb-5 sm:px-10"
         style={{ backgroundColor: classroom.cover_color }}
       >
-        <h1 className="text-xl font-bold text-white sm:text-2xl">{classroom.name}</h1>
+        <h1 className="text-2xl font-bold text-white sm:text-3xl">{classroom.name}</h1>
         {classroom.section && (
-          <p className="mt-0.5 text-sm text-white/75">
+          <p className="mt-1 text-base text-white/80">
             {classroom.subject && `${classroom.subject} · `}Section {classroom.section}
           </p>
         )}
         {classroom.teacher && !isTeacher && (
-          <p className="mt-1 text-xs text-white/70">{classroom.teacher.full_name}</p>
+          <p className="mt-1.5 text-sm font-medium text-white/90">{classroom.teacher.full_name}</p>
         )}
       </div>
 
@@ -64,6 +66,19 @@ export function ClassroomHeader({ classroom, isTeacher }: ClassroomHeaderProps) 
               </Link>
             )
           })}
+
+          {/* Leave classroom for students, anchored to the right */}
+          {!isTeacher && (
+            <form action={leaveClassroom} onSubmit={(e) => {
+              if (!confirm('Are you sure you want to leave this classroom?')) e.preventDefault()
+            }} className="ml-auto mt-1 mr-2 flex">
+              <input type="hidden" name="classroom_id" value={classroom.id} />
+              <button type="submit" className="shrink-0 px-4 py-2 text-base font-semibold text-destructive hover:bg-destructive/10 rounded-xl transition-all hover:scale-[1.02] cursor-pointer inline-flex items-center gap-2 m-1">
+                <LogOut className="h-4 w-4" />
+                Leave Classroom
+              </button>
+            </form>
+          )}
         </div>
       </nav>
     </div>

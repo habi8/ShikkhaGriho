@@ -46,7 +46,7 @@ export default async function TeacherDashboardPage() {
             You have {enriched.length} classroom{enriched.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <CreateClassroomDialog />
+        <CreateClassroomDialog triggerClassName="bg-white text-[#2E8B57] hover:bg-white/90 shadow-sm" />
       </div>
 
       {/* Classrooms grid */}

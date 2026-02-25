@@ -27,7 +27,7 @@ const CLASSROOM_COLORS = [
   '#0f766e', // Teal
 ]
 
-export function CreateClassroomDialog() {
+export function CreateClassroomDialog({ triggerClassName, triggerVariant = "default" }: { triggerClassName?: string, triggerVariant?: "default" | "secondary" | "outline" | "ghost" }) {
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -52,7 +52,7 @@ export function CreateClassroomDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2 text-base font-semibold px-5 py-2.5">
+        <Button variant={triggerVariant} className={cn("gap-2 text-base font-semibold px-5 py-2.5 transition-all hover:scale-[1.02]", triggerClassName)}>
           <Plus className="h-5 w-5" />
           Create Classroom
         </Button>
