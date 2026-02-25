@@ -7,19 +7,19 @@ interface LogoProps {
   href?: string
 }
 
-export function Logo({ size = 40, showText = true, href = '/' }: LogoProps) {
+export function Logo({ size = 48, showText = true, href = '/' }: LogoProps) {
   return (
-    <Link href={href} className="flex items-center gap-2.5 shrink-0">
+    <Link href={href} className="flex items-center gap-3 shrink-0">
       <Image
         src="/images/logo.png"
         alt="ShikkhaGriho Logo"
         width={size}
         height={size}
-        className="object-contain"
+        className="object-contain drop-shadow-md"
         priority
       />
       {showText && (
-        <span className="font-bold text-lg leading-tight text-foreground">
+        <span className="font-bold text-xl leading-tight text-sidebar-foreground tracking-tight">
           ShikkhaGriho
         </span>
       )}

@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter, Hind_Siliguri, Geist_Mono } from 'next/font/google'
+import { Nunito, Hind_Siliguri, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+})
 const hindSiliguri = Hind_Siliguri({
   subsets: ['bengali', 'latin'],
   weight: ['400', '500', '600', '700'],
@@ -27,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
-      <body className={`${inter.variable} ${hindSiliguri.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${nunito.variable} ${hindSiliguri.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
         <Analytics />
       </body>

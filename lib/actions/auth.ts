@@ -23,13 +23,16 @@ export async function signUp(formData: FormData) {
   })
 
   if (error) {
-    return redirect(`/auth/error?message=${encodeURIComponent(error.message)}`)
+    return { error: error.message }
   }
 
   redirect('/auth/sign-up-success')
 }
 
-export async function signIn(formData: FormData) {
+export async function signIn(
+  _prevState: { error: string | null },
+  formData: FormData,
+): Promise<{ error: string | null; redirectTo?: string }> {
   const supabase = await createClient()
   const email = formData.get('email') as string
   const password = formData.get('password') as string
@@ -37,15 +40,13 @@ export async function signIn(formData: FormData) {
   const { error, data } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {
-    return redirect(`/auth/error?message=${encodeURIComponent(error.message)}`)
+    return { error: error.message }
   }
 
   const role = data.user?.user_metadata?.role as UserRole
-  if (role === 'teacher') {
-    redirect('/teacher-dashboard')
-  } else {
-    redirect('/student-dashboard')
-  }
+  const redirectTo = role === 'teacher' ? '/teacher-dashboard' : '/student-dashboard'
+
+  return { error: null, redirectTo }
 }
 
 export async function signOut() {

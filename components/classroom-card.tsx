@@ -11,39 +11,41 @@ export function ClassroomCard({ classroom, role }: ClassroomCardProps) {
   return (
     <Link
       href={`/classroom/${classroom.id}`}
-      className="group block overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow"
+      className="group block overflow-hidden rounded-2xl border border-border bg-card shadow-sm hover:shadow-xl transition-all hover:-translate-y-0.5"
     >
       {/* Cover */}
       <div
-        className="flex h-28 items-end p-4"
+        className="relative flex h-36 items-end p-5"
         style={{ backgroundColor: classroom.cover_color }}
       >
-        <h3 className="text-lg font-bold text-white leading-snug text-balance line-clamp-2">
+        {/* Subtle overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+        <h3 className="relative text-xl font-bold text-white leading-snug text-balance line-clamp-2 drop-shadow-sm">
           {classroom.name}
         </h3>
       </div>
 
       {/* Body */}
-      <div className="p-4">
+      <div className="p-5">
         {classroom.subject && (
-          <p className="text-sm text-muted-foreground mb-1">{classroom.subject}</p>
+          <p className="text-base font-medium text-foreground mb-0.5">{classroom.subject}</p>
         )}
         {classroom.section && (
-          <p className="text-xs text-muted-foreground">{classroom.section}</p>
+          <p className="text-sm text-muted-foreground">{classroom.section}</p>
         )}
         {classroom.teacher && role === 'student' && (
-          <p className="mt-2 text-xs text-muted-foreground">
+          <p className="mt-2 text-sm text-muted-foreground font-medium">
             {classroom.teacher.full_name}
           </p>
         )}
 
-        <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Users className="h-3.5 w-3.5" />
+        <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Users className="h-4 w-4" />
             <span>{classroom.member_count ?? 0} students</span>
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <BookOpen className="h-3.5 w-3.5" />
+          <div className="flex items-center gap-2 text-sm font-semibold text-accent">
+            <BookOpen className="h-4 w-4" />
             <span>Open</span>
           </div>
         </div>
