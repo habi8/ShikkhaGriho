@@ -36,13 +36,13 @@ export default async function TeacherDashboardPage() {
     <div className="p-6 sm:p-8 max-w-6xl mx-auto">
       {/* Colored header banner */}
       <div className="mb-8 rounded-2xl px-7 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        style={{ background: 'linear-gradient(120deg, oklch(0.68 0.14 78) 0%, oklch(0.76 0.13 90) 100%)' }}>
+        style={{ background: 'linear-gradient(120deg, #1E3A8A 0%, #1D4ED8 100%)' }}>
         <div>
-          <p className="text-sm font-semibold text-foreground/50 uppercase tracking-widest mb-1">Teacher Dashboard</p>
-          <h1 className="text-3xl font-bold text-foreground">
+          <p className="text-sm font-semibold uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Teacher Dashboard</p>
+          <h1 className="text-3xl font-bold text-white">
             Welcome back, {firstName}
           </h1>
-          <p className="mt-1.5 text-base text-foreground/70">
+          <p className="mt-1.5 text-base" style={{ color: 'rgba(255,255,255,0.75)' }}>
             You have {enriched.length} classroom{enriched.length !== 1 ? 's' : ''}
           </p>
         </div>

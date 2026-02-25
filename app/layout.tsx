@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { IBM_Plex_Mono, Hind_Siliguri } from 'next/font/google'
+import { Inter, Hind_Siliguri } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const ibmPlexMono = IBM_Plex_Mono({
+const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-sans',
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
-      <body className={`${ibmPlexMono.variable} ${hindSiliguri.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} ${hindSiliguri.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
         <Analytics />
       </body>

@@ -48,12 +48,12 @@ export default function SignUpPage() {
   return (
     <main
       className="flex min-h-screen items-center justify-center p-4 py-10"
-      style={{ background: 'linear-gradient(160deg, #fffde7 0%, #fff9c4 50%, #fef9e7 100%)' }}
+      style={{ background: '#F8FAFC' }}
     >
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-4">
-          <div className="rounded-2xl bg-white/80 p-4 ring-2 ring-yellow-200 shadow-xl">
+          <div className="rounded-2xl bg-white p-4 shadow-xl" style={{ border: '2px solid #E2E8F0' }}>
             <Image
               src="/images/logo.png"
               alt="ShikkhaGriho"
@@ -64,8 +64,8 @@ export default function SignUpPage() {
             />
           </div>
           <div className="text-center">
-            <h1 className="text-4xl font-extrabold text-amber-900 tracking-tight">ShikkhaGriho</h1>
-            <p className="text-base text-amber-700/80 mt-1 font-medium">শিক্ষা গৃহ — Join your classroom today</p>
+            <h1 className="text-4xl font-bold tracking-tight" style={{ color: '#1E3A8A' }}>ShikkhaGriho</h1>
+            <p className="text-base mt-1 font-medium" style={{ color: '#475569' }}>শিক্ষা গৃহ — Join your classroom today</p>
           </div>
         </div>
 
