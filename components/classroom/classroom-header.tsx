@@ -13,6 +13,7 @@ interface ClassroomHeaderProps {
 
 const tabs = (id: string, isTeacher: boolean) => [
   { label: 'Announcements', href: `/classroom/${id}` },
+  { label: 'Resources', href: `/classroom/${id}/resources` },
   { label: 'Members', href: `/classroom/${id}/members` },
   { label: 'Attendance', href: `/classroom/${id}/attendance` },
   { label: 'About', href: `/classroom/${id}/about` },
