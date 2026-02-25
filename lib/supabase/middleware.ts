@@ -25,9 +25,31 @@ export async function updateSession(request: NextRequest) {
     },
   )
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  let user = null
+  try {
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch (err: unknown) {
+    // Stale/invalid refresh token — clear all auth cookies and redirect to login
+    const isAuthError =
+      err !== null &&
+      typeof err === 'object' &&
+      '__isAuthError' in err &&
+      (err as { __isAuthError: boolean }).__isAuthError === true
+
+    if (isAuthError) {
+      const loginUrl = request.nextUrl.clone()
+      loginUrl.pathname = '/auth/login'
+      const redirectResponse = NextResponse.redirect(loginUrl)
+      // Delete all Supabase auth cookies so the bad tokens are cleared
+      request.cookies.getAll().forEach(({ name }) => {
+        if (name.startsWith('sb-')) {
+          redirectResponse.cookies.delete(name)
+        }
+      })
+      return redirectResponse
+    }
+  }
 
   const protectedPaths = ['/teacher-dashboard', '/student-dashboard', '/classroom', '/notifications', '/profile']
   const isProtected = protectedPaths.some(p => request.nextUrl.pathname.startsWith(p))
