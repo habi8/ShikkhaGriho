@@ -4,9 +4,11 @@ import { useTranslation } from 'react-i18next'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Users } from 'lucide-react'
+import { Users, X } from 'lucide-react'
 import { EmptyState } from '@/components/empty-state'
 import { removeMemberByForm } from '@/lib/actions/classroom'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { useState } from 'react'
 
 function initials(name: string | null) {
   if (!name) return '?'
@@ -23,10 +25,17 @@ export function MembersClient({
   classroom: { invite_code?: string | null }
   classroomId: string
   isTeacher: boolean
-  teacherProfile?: { full_name?: string | null; avatar_url?: string | null }
-  students: Array<{ id: string; student_id: string; profile?: { full_name?: string | null; avatar_url?: string | null } }>
+  teacherProfile?: { full_name?: string | null; avatar_url?: string | null; email?: string | null; phone?: string | null; role?: 'teacher' | 'student' }
+  students: Array<{ id: string; student_id: string; profile?: { full_name?: string | null; avatar_url?: string | null; email?: string | null; phone?: string | null; role?: 'teacher' | 'student' } }>
 }) {
   const { t } = useTranslation()
+  const [selectedMember, setSelectedMember] = useState<{
+    full_name?: string | null
+    avatar_url?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: 'teacher' | 'student'
+  } | null>(null)
 
   return (
     <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto">
@@ -44,7 +53,13 @@ export function MembersClient({
 
       <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">{t('classroom.about.teacher')}</h2>
       {teacherProfile && (
-        <div className="mb-6 flex items-center gap-3 rounded-lg border border-border bg-card p-3">
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setSelectedMember(teacherProfile)}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedMember(teacherProfile) }}
+          className="mb-6 flex w-full items-center gap-3 rounded-lg border border-border bg-card p-3 text-left transition-shadow hover:shadow-sm cursor-pointer"
+        >
           <Avatar className="h-10 w-10">
             {teacherProfile.avatar_url && (
               <AvatarImage src={teacherProfile.avatar_url} alt={teacherProfile.full_name ?? t('common.unknown')} />
@@ -77,7 +92,11 @@ export function MembersClient({
           {students.map((member) => (
             <div
               key={member.id}
-              className="flex items-center justify-between rounded-lg border border-border bg-card p-3"
+              role="button"
+              tabIndex={0}
+              onClick={() => setSelectedMember(member.profile ?? null)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedMember(member.profile ?? null) }}
+              className="flex w-full items-center justify-between rounded-lg border border-border bg-card p-3 text-left transition-shadow hover:shadow-sm cursor-pointer"
             >
               <div className="flex items-center gap-3">
                 <Avatar className="h-9 w-9">
@@ -93,7 +112,7 @@ export function MembersClient({
                 </p>
               </div>
               {isTeacher && (
-                <form action={removeMemberByForm}>
+                <form action={removeMemberByForm} onClick={(e) => e.stopPropagation()}>
                   <input type="hidden" name="student_id" value={member.student_id} />
                   <input type="hidden" name="classroom_id" value={classroomId} />
                   <Button type="submit" variant="ghost" size="sm" className="text-destructive hover:text-destructive">
@@ -105,6 +124,40 @@ export function MembersClient({
           ))}
         </div>
       )}
+
+      <Dialog open={!!selectedMember} onOpenChange={(open) => { if (!open) setSelectedMember(null) }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-lg">{t('classroom.members.profile_title')}</DialogTitle>
+          </DialogHeader>
+          {selectedMember && (
+            <div className="flex items-center gap-4">
+              <Avatar className="h-16 w-16">
+                {selectedMember.avatar_url && (
+                  <AvatarImage src={selectedMember.avatar_url} alt={selectedMember.full_name ?? t('common.unknown')} />
+                )}
+                <AvatarFallback className="bg-primary/10 text-primary text-xl font-bold">
+                  {initials(selectedMember.full_name ?? null)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="space-y-1">
+                <p className="text-base font-semibold text-foreground">
+                  {selectedMember.full_name ?? t('common.unknown')}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {selectedMember.email ?? t('classroom.members.not_provided')}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {selectedMember.phone ?? t('classroom.members.not_provided')}
+                </p>
+                <Badge variant="secondary" className="capitalize">
+                  {selectedMember.role === 'teacher' ? t('roles.teacher') : t('roles.student')}
+                </Badge>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

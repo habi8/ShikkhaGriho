@@ -306,6 +306,8 @@
       "empty_title": "No students yet",
       "empty_description": "Share the invite code with students to let them join.",
       "unknown_student": "Unknown student",
+      "profile_title": "Member profile",
+      "not_provided": "Not provided",
       "remove": "Remove"
     },
     "settings": {
