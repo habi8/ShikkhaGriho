@@ -25,11 +25,14 @@ export default async function ProfilePage() {
 
   return (
     <ProfileClient
+      userId={user.id}
       fullName={fullName}
       email={user.email}
       role={role as 'teacher' | 'student'}
       classroomCount={classroomCount}
       createdAt={createdAt}
+      avatarUrl={profile?.avatar_url ?? user.user_metadata?.avatar_url ?? null}
+      phone={profile?.phone ?? user.user_metadata?.phone ?? null}
     />
   )
 }

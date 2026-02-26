@@ -6,7 +6,7 @@ import { Announcement } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Trash2, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useTranslation } from 'react-i18next'
 import { getDateLocale } from '@/lib/date-locale'
 
@@ -46,6 +46,9 @@ export function AnnouncementCard({
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <Avatar className="h-9 w-9">
+            {announcement.author?.avatar_url && (
+              <AvatarImage src={announcement.author.avatar_url} alt={announcement.author?.full_name ?? t('common.unknown')} />
+            )}
             <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
               {initials(announcement.author?.full_name ?? null)}
             </AvatarFallback>
@@ -99,6 +102,9 @@ export function AnnouncementCard({
             {comments.map((comment) => (
               <div key={comment.id} className="flex gap-2.5">
                 <Avatar className="h-7 w-7 shrink-0">
+                  {comment.author?.avatar_url && (
+                    <AvatarImage src={comment.author.avatar_url} alt={comment.author?.full_name ?? t('common.unknown')} />
+                  )}
                   <AvatarFallback className="bg-muted text-muted-foreground text-xs">
                     {initials(comment.author?.full_name ?? null)}
                   </AvatarFallback>

@@ -18,9 +18,11 @@ export function I18nProvider({
     ? initialLanguage
     : 'en'
 
-  if (i18n.language !== safeInitial) {
-    i18n.changeLanguage(safeInitial)
-  }
+  useEffect(() => {
+    if (i18n.language !== safeInitial) {
+      i18n.changeLanguage(safeInitial)
+    }
+  }, [safeInitial])
 
   useEffect(() => {
     const stored = localStorage.getItem(LANGUAGE_STORAGE_KEY)

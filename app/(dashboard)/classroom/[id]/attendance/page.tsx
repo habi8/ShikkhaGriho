@@ -18,7 +18,7 @@ export default async function AttendancePage({ params }: PageProps) {
     supabase.auth.getUser(),
     supabase.from('classrooms').select('teacher_id').eq('id', id).single(),
     supabase.from('attendance_sessions').select('*').eq('classroom_id', id).order('date', { ascending: false }),
-    supabase.from('classroom_members').select('student_id, profiles(id, full_name)').eq('classroom_id', id)
+    supabase.from('classroom_members').select('student_id, profiles(id, full_name, avatar_url)').eq('classroom_id', id)
   ])
 
   if (!user) redirect('/auth/login')
@@ -28,6 +28,7 @@ export default async function AttendancePage({ params }: PageProps) {
   const students = (members ?? []).map((m: any) => ({
     student_id: m.student_id,
     full_name: m.profiles?.full_name ?? '',
+    avatar_url: m.profiles?.avatar_url ?? null,
   }))
 
   const openSession = (sessions ?? []).find((s: any) => s.is_open)

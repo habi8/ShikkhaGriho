@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Users } from 'lucide-react'
@@ -23,8 +23,8 @@ export function MembersClient({
   classroom: { invite_code?: string | null }
   classroomId: string
   isTeacher: boolean
-  teacherProfile?: { full_name?: string | null }
-  students: Array<{ id: string; student_id: string; profile?: { full_name?: string | null } }>
+  teacherProfile?: { full_name?: string | null; avatar_url?: string | null }
+  students: Array<{ id: string; student_id: string; profile?: { full_name?: string | null; avatar_url?: string | null } }>
 }) {
   const { t } = useTranslation()
 
@@ -46,6 +46,9 @@ export function MembersClient({
       {teacherProfile && (
         <div className="mb-6 flex items-center gap-3 rounded-lg border border-border bg-card p-3">
           <Avatar className="h-10 w-10">
+            {teacherProfile.avatar_url && (
+              <AvatarImage src={teacherProfile.avatar_url} alt={teacherProfile.full_name ?? t('common.unknown')} />
+            )}
             <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">
               {initials(teacherProfile.full_name ?? null)}
             </AvatarFallback>
@@ -78,6 +81,9 @@ export function MembersClient({
             >
               <div className="flex items-center gap-3">
                 <Avatar className="h-9 w-9">
+                  {member.profile?.avatar_url && (
+                    <AvatarImage src={member.profile.avatar_url} alt={member.profile.full_name ?? t('classroom.members.unknown_student')} />
+                  )}
                   <AvatarFallback className="bg-muted text-muted-foreground text-sm">
                     {initials(member.profile?.full_name ?? null)}
                   </AvatarFallback>

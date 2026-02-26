@@ -12,6 +12,7 @@
     "name": "ShikkhaGriho"
   },
   "nav": {
+    "home": "Home",
     "about": "About",
     "reviews": "Review",
     "login": "Login",
@@ -107,7 +108,23 @@
     "error": {
       "title": "Something went wrong",
       "default_message": "An unexpected error occurred. Please try again."
-    }
+    },
+    "avatar": {
+      "title": "Add a profile photo",
+      "subtitle": "Upload a square photo so classmates can recognize you.",
+      "upload_hint": "Upload a photo from your device",
+      "square_hint": "Square images work best",
+      "zoom": "Zoom",
+      "choose": "Choose photo",
+      "save": "Save photo",
+      "saving": "Saving...",
+      "skip": "Skip for now",
+      "error_no_image": "Please select a photo to continue.",
+      "error_upload": "Failed to upload photo. Please try again.",
+      "error_invalid": "Please choose an image file."
+    },
+    "password_show": "Show password",
+    "password_hide": "Hide password"
   },
   "landing": {
     "hero": {
@@ -342,7 +359,29 @@
     "title": "Profile",
     "classrooms_created": "Classrooms created",
     "classrooms_enrolled": "Classrooms enrolled",
-    "member_since": "Member since"
+    "member_since": "Member since",
+    "phone_label": "Phone number",
+    "phone_placeholder": "Add your phone number",
+    "phone_save": "Save phone",
+    "phone_saving": "Saving...",
+    "phone_saved": "Phone number saved.",
+    "phone_error": "Could not save phone number.",
+    "name_label": "Full name",
+    "name_placeholder": "Update your name",
+    "name_save": "Save name",
+    "name_saving": "Saving...",
+    "name_saved": "Name updated.",
+    "name_error": "Could not update name.",
+    "edit_avatar": "Change profile photo",
+    "remove_avatar": "Remove photo",
+    "remove_avatar_removing": "Removing...",
+    "remove_avatar_success": "Profile photo removed.",
+    "remove_avatar_error": "Could not remove photo.",
+    "remove_avatar_confirm": "Remove your profile photo and use the default avatar?",
+    "delete_title": "Delete account",
+    "delete_description": "This permanently deletes your account and removes your data. This action cannot be undone.",
+    "delete_button": "Delete account",
+    "delete_confirm": "Are you sure you want to delete your account? This cannot be undone."
   },
   "pagination": {
     "label": "Pagination",

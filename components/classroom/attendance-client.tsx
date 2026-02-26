@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { EmptyState } from '@/components/empty-state'
 import { ClipboardCheck } from 'lucide-react'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { format } from 'date-fns'
 import { getDateLocale } from '@/lib/date-locale'
 
@@ -33,7 +33,7 @@ export function AttendanceClient({
   classroomId: string
   isTeacher: boolean
   sessions: any[]
-  students: Array<{ student_id: string; full_name: string }>
+  students: Array<{ student_id: string; full_name: string; avatar_url?: string | null }>
   openSession: any | null
   openRecords: Record<string, string>
 }) {
@@ -99,6 +99,9 @@ export function AttendanceClient({
                   <div key={student.student_id} className="flex items-center justify-between rounded-lg bg-card border border-border p-3">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8">
+                        {student.avatar_url && (
+                          <AvatarImage src={student.avatar_url} alt={displayName} />
+                        )}
                         <AvatarFallback className="bg-muted text-xs">{initials(displayName)}</AvatarFallback>
                       </Avatar>
                       <span className="text-sm font-medium">{displayName}</span>
