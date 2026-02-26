@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Trash2, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { useTranslation } from 'react-i18next'
+import { getDateLocale } from '@/lib/date-locale'
 
 interface AnnouncementCardProps {
   announcement: Announcement
@@ -32,6 +34,8 @@ export function AnnouncementCard({
 }: AnnouncementCardProps) {
   const [showComments, setShowComments] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const { t, i18n } = useTranslation()
+  const locale = getDateLocale(i18n.language)
 
   const canDelete = isTeacher || announcement.author_id === currentUserId
   const comments = announcement.comments ?? []
@@ -48,16 +52,16 @@ export function AnnouncementCard({
           </Avatar>
           <div>
             <p className="text-sm font-semibold text-foreground">
-              {announcement.author?.full_name ?? 'Unknown'}
+              {announcement.author?.full_name ?? t('common.unknown')}
             </p>
             <p className="text-xs text-muted-foreground">
-              {formatDistanceToNow(new Date(announcement.created_at), { addSuffix: true })}
+              {formatDistanceToNow(new Date(announcement.created_at), { addSuffix: true, locale })}
             </p>
           </div>
         </div>
         {canDelete && (
           <button
-            aria-label="Delete announcement"
+            aria-label={t('classroom.announcements.delete')}
             disabled={deleting}
             onClick={async () => {
               setDeleting(true)
@@ -82,7 +86,7 @@ export function AnnouncementCard({
           className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
           <MessageSquare className="h-3.5 w-3.5" />
-          {comments.length} comment{comments.length !== 1 ? 's' : ''}
+          {t('classroom.announcements.comment_count', { count: comments.length })}
           {showComments ? (
             <ChevronUp className="h-3.5 w-3.5" />
           ) : (
@@ -101,7 +105,7 @@ export function AnnouncementCard({
                 </Avatar>
                 <div className="flex-1 rounded-lg bg-muted px-3 py-2">
                   <p className="text-xs font-semibold text-foreground">
-                    {comment.author?.full_name ?? 'Unknown'}
+                    {comment.author?.full_name ?? t('common.unknown')}
                   </p>
                   <p className="text-xs text-foreground/80 mt-0.5 leading-relaxed">
                     {comment.content}
@@ -116,12 +120,12 @@ export function AnnouncementCard({
               <input type="hidden" name="classroom_id" value={classroomId} />
               <Input
                 name="content"
-                placeholder="Add a comment..."
+                placeholder={t('classroom.announcements.add_comment')}
                 required
                 className="h-8 text-xs"
               />
               <Button type="submit" size="sm" className="h-8 text-xs px-3">
-                Post
+                {t('common.post')}
               </Button>
             </form>
           </div>

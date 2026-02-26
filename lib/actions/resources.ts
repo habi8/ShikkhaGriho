@@ -44,3 +44,10 @@ export async function deleteResource(id: string, filePath: string, classroom_id:
 
     revalidatePath(`/classroom/${classroom_id}/resources`)
 }
+
+export async function deleteResourceByForm(formData: FormData) {
+    const id = formData.get('resource_id') as string
+    const filePath = formData.get('file_path') as string
+    const classroom_id = formData.get('classroom_id') as string
+    await deleteResource(id, filePath, classroom_id)
+}

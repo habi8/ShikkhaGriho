@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -34,9 +35,10 @@ const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
 function useCarousel() {
   const context = React.useContext(CarouselContext)
+  const { t } = useTranslation()
 
   if (!context) {
-    throw new Error('useCarousel must be used within a <Carousel />')
+    throw new Error(t('errors.carousel_context'))
   }
 
   return context
@@ -178,6 +180,7 @@ function CarouselPrevious({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+  const { t } = useTranslation()
 
   return (
     <Button
@@ -196,7 +199,7 @@ function CarouselPrevious({
       {...props}
     >
       <ArrowLeft />
-      <span className="sr-only">Previous slide</span>
+      <span className="sr-only">{t('carousel.previous_slide')}</span>
     </Button>
   )
 }
@@ -208,6 +211,7 @@ function CarouselNext({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
+  const { t } = useTranslation()
 
   return (
     <Button
@@ -226,7 +230,7 @@ function CarouselNext({
       {...props}
     >
       <ArrowRight />
-      <span className="sr-only">Next slide</span>
+      <span className="sr-only">{t('carousel.next_slide')}</span>
     </Button>
   )
 }

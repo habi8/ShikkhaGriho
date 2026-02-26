@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import i18n from '@/lib/i18n'
 
 interface LogoProps {
   size?: number
@@ -11,10 +12,11 @@ interface LogoProps {
 }
 
 export function Logo({ size = 48, showText = true, href = '/', textColor = '#2E8B57', logoBg = false, textSizeClass = 'text-2xl sm:text-3xl' }: LogoProps) {
+  const logoName = i18n.t('logo.name')
   const logoImage = (
     <Image
       src="/images/logo.png"
-      alt="ShikkhaGriho Logo"
+      alt={i18n.t('logo.alt')}
       width={size}
       height={size}
       className="object-contain drop-shadow-md"
@@ -33,7 +35,7 @@ export function Logo({ size = 48, showText = true, href = '/', textColor = '#2E8
       )}
       {showText && (
         <span className={`font-bold leading-tight tracking-tight ${textSizeClass}`} style={{ color: textColor }}>
-          ShikkhaGriho
+          {logoName}
         </span>
       )}
     </Link>

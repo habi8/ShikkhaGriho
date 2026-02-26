@@ -8,7 +8,7 @@ export async function submitReview(formData: FormData) {
     const review = formData.get('review') as string
 
     if (!name || !review) {
-        throw new Error('Name and review are required.')
+        throw new Error('REVIEW_REQUIRED')
     }
 
     // We can insert without auth token because RLS permits INSERT anonymously
@@ -21,7 +21,7 @@ export async function submitReview(formData: FormData) {
 
     if (error) {
         console.error("Supabase insert error:", error)
-        throw new Error(`Failed to submit review: ${error.message}`)
+        throw new Error('REVIEW_SUBMIT_FAILED')
     }
 
     revalidatePath('/')

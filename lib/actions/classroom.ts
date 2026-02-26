@@ -49,7 +49,7 @@ export async function joinClassroom(formData: FormData) {
     .rpc('lookup_classroom_by_invite', { p_invite_code: invite_code })
 
   if (lookupError || !classroomId) {
-    return { error: 'Invalid invite code. Please check and try again.' }
+    return { errorKey: 'errors.invalid_invite_code' }
   }
 
   const { error: memberError } = await supabase
@@ -57,7 +57,7 @@ export async function joinClassroom(formData: FormData) {
     .insert({ classroom_id: classroomId, student_id: user.id })
 
   if (memberError && memberError.code !== '23505') {
-    return { error: 'Could not join classroom. You may already be a member.' }
+    return { errorKey: 'errors.already_member' }
   }
 
   revalidatePath('/student-dashboard')
@@ -142,6 +142,12 @@ export async function closeAttendanceSession(session_id: string, classroom_id: s
   revalidatePath(`/classroom/${classroom_id}`)
 }
 
+export async function closeAttendanceSessionByForm(formData: FormData) {
+  const session_id = formData.get('session_id') as string
+  const classroom_id = formData.get('classroom_id') as string
+  await closeAttendanceSession(session_id, classroom_id)
+}
+
 export async function removeMember(user_id: string, classroom_id: string) {
   const supabase = await createClient()
   await supabase
@@ -150,6 +156,12 @@ export async function removeMember(user_id: string, classroom_id: string) {
     .eq('student_id', user_id)
     .eq('classroom_id', classroom_id)
   revalidatePath(`/classroom/${classroom_id}`)
+}
+
+export async function removeMemberByForm(formData: FormData) {
+  const user_id = formData.get('student_id') as string
+  const classroom_id = formData.get('classroom_id') as string
+  await removeMember(user_id, classroom_id)
 }
 
 export async function deleteClassroom(classroom_id: string) {

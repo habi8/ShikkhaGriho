@@ -10,12 +10,14 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { AlertCircle, Loader2, GraduationCap, School } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function SignUpPage() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [isPending, setIsPending] = useState(false)
   const [role, setRole] = useState<'student' | 'teacher'>('student')
+  const { t } = useTranslation()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -37,7 +39,7 @@ export default function SignUpPage() {
     })
 
     if (signUpError) {
-      setError(signUpError.message)
+      setError(t('errors.signup_failed'))
       setIsPending(false)
       return
     }
@@ -52,11 +54,11 @@ export default function SignUpPage() {
     >
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="mb-8 flex flex-col items-center gap-4">
+        <div className="mb-8 flex flex-col items-center gap-4 fade-in-up">
           <div className="rounded-2xl bg-white p-4 shadow-xl" style={{ border: '2px solid #E2E8F0' }}>
             <Image
               src="/images/logo.png"
-              alt="ShikkhaGriho"
+              alt={t('logo.alt')}
               width={110}
               height={110}
               className="object-contain"
@@ -64,15 +66,15 @@ export default function SignUpPage() {
             />
           </div>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight" style={{ color: '#2E8B57' }}>ShikkhaGriho</h1>
-            <p className="text-base mt-1 font-medium" style={{ color: '#475569' }}>শিক্ষা গৃহ — Join your classroom today</p>
+            <h1 className="text-4xl font-bold tracking-tight" style={{ color: '#2E8B57' }}>{t('brand.name')}</h1>
+            <p className="text-base mt-1 font-medium" style={{ color: '#475569' }}>{t('auth.signup.tagline')}</p>
           </div>
         </div>
 
-        <Card className="border-0 shadow-2xl rounded-2xl bg-white/95">
+        <Card className="border-0 shadow-2xl rounded-2xl bg-white/95" style={{ ['--fade-delay' as any]: '120ms' }}>
           <CardHeader className="pb-4 pt-7 px-8">
-            <CardTitle className="text-3xl font-extrabold text-foreground">Create an account</CardTitle>
-            <CardDescription className="text-base text-muted-foreground mt-1">Fill in the details below to get started</CardDescription>
+            <CardTitle className="text-3xl font-extrabold text-foreground">{t('auth.signup.title')}</CardTitle>
+            <CardDescription className="text-base text-muted-foreground mt-1">{t('auth.signup.subtitle')}</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-5 px-8">
@@ -83,36 +85,36 @@ export default function SignUpPage() {
                 </div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="full_name" className="text-base font-semibold text-foreground">Full name</Label>
+                <Label htmlFor="full_name" className="text-base font-semibold text-foreground">{t('auth.fields.full_name')}</Label>
                 <Input
                   id="full_name"
                   name="full_name"
                   type="text"
-                  placeholder="Your full name"
+                  placeholder={t('auth.placeholders.full_name')}
                   required
                   autoComplete="name"
                   className="h-12 text-base rounded-xl"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-base font-semibold text-foreground">Email address</Label>
+                <Label htmlFor="email" className="text-base font-semibold text-foreground">{t('auth.fields.email')}</Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t('auth.placeholders.email')}
                   required
                   autoComplete="email"
                   className="h-12 text-base rounded-xl"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-base font-semibold text-foreground">Password</Label>
+                <Label htmlFor="password" className="text-base font-semibold text-foreground">{t('auth.fields.password')}</Label>
                 <Input
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="At least 6 characters"
+                  placeholder={t('auth.placeholders.password_length')}
                   required
                   minLength={6}
                   autoComplete="new-password"
@@ -122,7 +124,7 @@ export default function SignUpPage() {
 
               {/* Role selection */}
               <fieldset className="space-y-2.5">
-                <legend className="text-base font-semibold text-foreground">I am a...</legend>
+                <legend className="text-base font-semibold text-foreground">{t('auth.signup.role_label')}</legend>
                 <div className="grid grid-cols-2 gap-3">
                   <label
                     className={`relative flex cursor-pointer flex-col items-center gap-2.5 rounded-xl border-2 p-4 transition-all ${
@@ -138,7 +140,7 @@ export default function SignUpPage() {
                       onChange={() => setRole('student')}
                     />
                     <GraduationCap className="h-7 w-7 text-primary" />
-                    <span className="text-base font-semibold text-foreground">Student</span>
+                    <span className="text-base font-semibold text-foreground">{t('roles.student')}</span>
                   </label>
                   <label
                     className={`relative flex cursor-pointer flex-col items-center gap-2.5 rounded-xl border-2 p-4 transition-all ${
@@ -154,7 +156,7 @@ export default function SignUpPage() {
                       onChange={() => setRole('teacher')}
                     />
                     <School className="h-7 w-7 text-primary" />
-                    <span className="text-base font-semibold text-foreground">Teacher</span>
+                    <span className="text-base font-semibold text-foreground">{t('roles.teacher')}</span>
                   </label>
                 </div>
               </fieldset>
@@ -168,16 +170,16 @@ export default function SignUpPage() {
                 {isPending ? (
                   <span className="flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Creating account…
+                    {t('auth.signup.creating')}
                   </span>
                 ) : (
-                  'Create account'
+                  t('auth.signup.create_account')
                 )}
               </Button>
               <p className="text-base text-muted-foreground text-center">
-                Already have an account?{' '}
+                {t('auth.signup.have_account')}{' '}
                 <Link href="/auth/login" className="text-accent font-bold hover:underline">
-                  Sign in
+                  {t('auth.signup.sign_in')}
                 </Link>
               </p>
             </CardFooter>

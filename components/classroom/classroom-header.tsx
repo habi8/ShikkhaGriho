@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { Classroom } from '@/types'
 import { leaveClassroom } from '@/lib/actions/classroom'
 import { LogOut } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface ClassroomHeaderProps {
   classroom: Classroom
@@ -13,29 +14,29 @@ interface ClassroomHeaderProps {
   currentUserId: string
 }
 
-const tabs = (id: string, isTeacher: boolean) => [
-  { label: 'Announcements', href: `/classroom/${id}` },
-  { label: 'Resources', href: `/classroom/${id}/resources` },
-  { label: 'Members', href: `/classroom/${id}/members` },
-  { label: 'Attendance', href: `/classroom/${id}/attendance` },
-  { label: 'About', href: `/classroom/${id}/about` },
-  ...(isTeacher ? [{ label: 'Settings', href: `/classroom/${id}/settings` }] : []),
-]
-
 export function ClassroomHeader({ classroom, isTeacher }: ClassroomHeaderProps) {
   const pathname = usePathname()
+  const { t } = useTranslation()
+  const tabs = [
+    { label: t('classroom.tabs.announcements'), href: `/classroom/${classroom.id}` },
+    { label: t('classroom.tabs.resources'), href: `/classroom/${classroom.id}/resources` },
+    { label: t('classroom.tabs.members'), href: `/classroom/${classroom.id}/members` },
+    { label: t('classroom.tabs.attendance'), href: `/classroom/${classroom.id}/attendance` },
+    { label: t('classroom.tabs.about'), href: `/classroom/${classroom.id}/about` },
+    ...(isTeacher ? [{ label: t('classroom.tabs.settings'), href: `/classroom/${classroom.id}/settings` }] : []),
+  ]
 
   return (
     <div>
       {/* Cover banner */}
       <div
-        className="px-6 pt-8 pb-5 sm:px-10"
-        style={{ backgroundColor: classroom.cover_color }}
+        className="mt-3 overflow-hidden rounded-2xl px-6 pt-8 pb-5 sm:px-10"
+        style={{ background: classroom.cover_color }}
       >
         <h1 className="text-2xl font-bold text-white sm:text-3xl">{classroom.name}</h1>
         {classroom.section && (
           <p className="mt-1 text-base text-white/80">
-            {classroom.subject && `${classroom.subject} · `}Section {classroom.section}
+            {classroom.subject && `${classroom.subject} · `}{t('classroom.section_label')} {classroom.section}
           </p>
         )}
         {classroom.teacher && !isTeacher && (
@@ -44,9 +45,9 @@ export function ClassroomHeader({ classroom, isTeacher }: ClassroomHeaderProps) 
       </div>
 
       {/* Tabs */}
-      <nav className="border-b border-border bg-card px-4 sm:px-8">
+      <nav className="mt-4 rounded-2xl border border-border bg-card px-4 sm:px-8">
         <div className="flex gap-1 overflow-x-auto scrollbar-none">
-          {tabs(classroom.id, isTeacher).map((tab) => {
+          {tabs.map((tab) => {
             const isActive =
               tab.href === `/classroom/${classroom.id}`
                 ? pathname === tab.href
@@ -70,12 +71,12 @@ export function ClassroomHeader({ classroom, isTeacher }: ClassroomHeaderProps) 
           {/* Leave classroom for students, anchored to the right */}
           {!isTeacher && (
             <form action={leaveClassroom} onSubmit={(e) => {
-              if (!confirm('Are you sure you want to leave this classroom?')) e.preventDefault()
+              if (!confirm(t('classroom.leave_confirm'))) e.preventDefault()
             }} className="ml-auto mt-1 mr-2 flex">
               <input type="hidden" name="classroom_id" value={classroom.id} />
               <button type="submit" className="shrink-0 px-4 py-2 text-base font-semibold text-destructive hover:bg-destructive/10 rounded-xl transition-all hover:scale-[1.02] cursor-pointer inline-flex items-center gap-2 m-1">
                 <LogOut className="h-4 w-4" />
-                Leave Classroom
+                {t('classroom.leave_button')}
               </button>
             </form>
           )}

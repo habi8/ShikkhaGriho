@@ -4,9 +4,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/components/logo'
 import { cn } from '@/lib/utils'
-import { LogOut, Menu, X, LayoutDashboard, User } from 'lucide-react'
+import { LogOut, MoreHorizontal, X, LayoutDashboard, User } from 'lucide-react'
 import { useState } from 'react'
 import { signOut } from '@/lib/actions/auth'
+import { useTranslation } from 'react-i18next'
 
 interface NavItem {
   href: string
@@ -22,27 +23,29 @@ interface AppSidebarProps {
 export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { t } = useTranslation()
 
   const dashboardHref = role === 'teacher' ? '/teacher-dashboard' : '/student-dashboard'
 
   const navItems: NavItem[] = [
-    { href: dashboardHref, label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
-    { href: '/profile', label: 'Profile', icon: <User className="h-5 w-5" /> },
+    { href: dashboardHref, label: t('nav.dashboard'), icon: <LayoutDashboard className="h-5 w-5" /> },
+    { href: '/profile', label: t('nav.profile'), icon: <User className="h-5 w-5" /> },
   ]
 
   const SidebarContent = () => (
-    <aside className="flex h-full w-72 flex-col bg-sidebar text-sidebar-foreground">
-      {/* Logo header with decorative accent */}
-      <div className="flex items-center justify-between px-5 py-5 border-b border-sidebar-border/50">
-        <Logo size={40} href={dashboardHref} textColor="#F8FAFC" logoBg textSizeClass="text-xl" />
-        <button
-          className="md:hidden text-sidebar-foreground/60 hover:text-sidebar-foreground"
-          onClick={() => setMobileOpen(false)}
-          aria-label="Close menu"
-        >
-          <X className="h-5 w-5" />
-        </button>
-      </div>
+    <div className="h-full w-72 p-3">
+      <aside className="flex h-full flex-col rounded-2xl border border-[#22C55E]/35 bg-gradient-to-br from-[#F0FDF4] via-white to-[#F8FAFC] text-[#14532D] shadow-[0_18px_40px_-28px_rgba(15,23,42,0.5)]">
+        {/* Logo header with decorative accent */}
+        <div className="flex items-center justify-between px-5 py-5 border-b border-[#22C55E]/25">
+          <Logo size={40} href={dashboardHref} textColor="#14532D" logoBg textSizeClass="text-xl" />
+          <button
+            className="md:hidden text-[#14532D]/70 hover:text-[#14532D]"
+            onClick={() => setMobileOpen(false)}
+            aria-label={t('nav.close_menu')}
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
 
       <nav className="flex-1 space-y-1 px-4 py-4">
         {navItems.map((item) => (
@@ -53,13 +56,13 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
             className={cn(
               'flex items-center gap-3.5 rounded-xl px-4 py-3 text-base font-medium transition-all',
               pathname === item.href
-                ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-md shadow-black/20'
-                : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground'
+                ? 'bg-[#22C55E] text-white shadow-md shadow-black/10'
+                : 'text-[#14532D]/70 hover:bg-[#DCFCE7] hover:text-[#14532D]'
             )}
           >
             <span className={cn(
               'shrink-0',
-              pathname === item.href ? 'text-sidebar-primary-foreground' : 'text-sidebar-foreground/60'
+              pathname === item.href ? 'text-white' : 'text-[#14532D]/60'
             )}>
               {item.icon}
             </span>
@@ -68,9 +71,9 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
         ))}
 
         {classrooms.length > 0 && (
-          <div className="mt-5 pt-4 border-t border-sidebar-border/50">
-            <p className="mb-3 px-4 text-xs font-bold uppercase tracking-widest text-sidebar-foreground/40">
-              My Classrooms
+          <div className="mt-5 pt-4 border-t border-[#22C55E]/25">
+            <p className="mb-3 px-4 text-xs font-bold uppercase tracking-widest text-[#14532D]/50">
+              {t('nav.my_classrooms')}
             </p>
             {classrooms.map((c) => (
               <Link
@@ -80,13 +83,13 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
                 className={cn(
                   'flex items-center gap-3 rounded-xl px-4 py-2.5 text-base font-medium transition-all',
                   pathname.startsWith(`/classroom/${c.id}`)
-                    ? 'bg-sidebar-accent text-sidebar-foreground'
-                    : 'text-sidebar-foreground/60 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground'
+                    ? 'bg-[#DCFCE7] text-[#14532D]'
+                    : 'text-[#14532D]/60 hover:bg-[#DCFCE7]/70 hover:text-[#14532D]'
                 )}
               >
                 <span
                   className="h-3 w-3 rounded-full shrink-0 shadow-sm"
-                  style={{ backgroundColor: c.cover_color }}
+                  style={{ background: c.cover_color }}
                 />
                 <span className="truncate">{c.name}</span>
               </Link>
@@ -95,29 +98,30 @@ export function AppSidebar({ role, classrooms = [] }: AppSidebarProps) {
         )}
       </nav>
 
-      <div className="border-t border-sidebar-border/50 p-4">
+      <div className="border-t border-[#22C55E]/25 p-4">
         <form action={signOut}>
           <button
             type="submit"
-            className="flex w-full items-center gap-3.5 rounded-xl px-4 py-3 text-base font-medium text-sidebar-foreground/60 hover:bg-destructive/10 hover:text-destructive transition-all hover:scale-[1.02] cursor-pointer"
+            className="flex w-full items-center gap-3.5 rounded-xl px-4 py-3 text-base font-medium text-[#14532D]/70 hover:bg-red-50 hover:text-red-600 transition-all hover:scale-[1.02] cursor-pointer"
           >
             <LogOut className="h-4 w-4 shrink-0" />
-            Sign out
+            {t('nav.sign_out')}
           </button>
         </form>
       </div>
-    </aside>
+      </aside>
+    </div>
   )
 
   return (
     <>
       {/* Mobile toggle button */}
       <button
-        className="fixed left-4 top-4 z-50 md:hidden rounded-md bg-sidebar p-2 text-sidebar-foreground shadow-md"
+        className="fixed left-1 top-1 z-50 md:hidden rounded-md bg-sidebar px-2 py-1 text-sidebar-foreground shadow-md"
         onClick={() => setMobileOpen(true)}
-        aria-label="Open menu"
+        aria-label={t('nav.open_menu')}
       >
-        <Menu className="h-5 w-5" />
+        <MoreHorizontal className="h-4 w-4" />
       </button>
 
       {/* Mobile overlay */}

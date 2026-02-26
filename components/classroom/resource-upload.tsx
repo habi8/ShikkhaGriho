@@ -6,11 +6,13 @@ import { createResourceRecord } from '@/lib/actions/resources'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Loader2, UploadCloud, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export function ResourceUpload({ classroomId, teacherId }: { classroomId: string, teacherId: string }) {
     const [file, setFile] = useState<File | null>(null)
     const [isUploading, setIsUploading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const { t } = useTranslation()
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -43,8 +45,8 @@ export function ResourceUpload({ classroomId, teacherId }: { classroomId: string
 
             setFile(null)
 
-        } catch (err: any) {
-            setError(err?.message || 'Failed to upload file.')
+        } catch {
+            setError(t('errors.upload_failed'))
         } finally {
             setIsUploading(false)
         }
@@ -66,8 +68,8 @@ export function ResourceUpload({ classroomId, teacherId }: { classroomId: string
                     {!file ? (
                         <div className="flex flex-col items-center gap-1.5 pointer-events-none text-muted-foreground group">
                             <UploadCloud className="h-6 w-6 text-primary/50" />
-                            <p className="text-sm font-medium">Click to select a file</p>
-                            <p className="text-xs">PDF, Images, Excel, Word (Max 50MB)</p>
+                            <p className="text-sm font-medium">{t('resources.upload.select_file')}</p>
+                            <p className="text-xs">{t('resources.upload.file_types')}</p>
                         </div>
                     ) : (
                         <div className="w-full flex items-center justify-between pointer-events-none px-2 z-10 text-foreground">
@@ -93,10 +95,10 @@ export function ResourceUpload({ classroomId, teacherId }: { classroomId: string
                         {isUploading ? (
                             <>
                                 <Loader2 className="h-4 w-4 animate-spin" />
-                                Uploading
+                                {t('common.uploading')}
                             </>
                         ) : (
-                            'Upload Resource'
+                            t('resources.upload.button')
                         )}
                     </Button>
                 </div>

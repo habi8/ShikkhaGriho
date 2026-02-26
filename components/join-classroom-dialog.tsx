@@ -13,11 +13,13 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Plus, Loader2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export function JoinClassroomDialog() {
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const { t } = useTranslation()
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -26,13 +28,13 @@ export function JoinClassroomDialog() {
     startTransition(async () => {
       try {
         const result = await joinClassroom(formData)
-        if (result?.error) {
-          setError(result.error)
+        if (result?.errorKey) {
+          setError(t(result.errorKey))
         }
         // if redirect() is called inside, it throws NEXT_REDIRECT which propagates correctly
       } catch (err: any) {
         if (err?.digest?.startsWith('NEXT_REDIRECT')) throw err
-        setError(err?.message ?? 'Something went wrong. Please try again.')
+        setError(t('errors.generic_try_again'))
       }
     })
   }
@@ -42,27 +44,27 @@ export function JoinClassroomDialog() {
       <DialogTrigger asChild>
         <Button className="gap-2 text-base font-semibold px-5 py-2.5">
           <Plus className="h-5 w-5" />
-          Join Classroom
+          {t('classroom.join_title')}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-xl">Join a classroom</DialogTitle>
+          <DialogTitle className="text-xl">{t('classroom.join_dialog_title')}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
           <div className="space-y-1.5">
-            <Label htmlFor="invite_code" className="text-base">Class code</Label>
+            <Label htmlFor="invite_code" className="text-base">{t('classroom.fields.invite_code')}</Label>
             <Input
               id="invite_code"
               name="invite_code"
-              placeholder="e.g. ABC1234"
+              placeholder={t('classroom.placeholders.invite_code')}
               required
               maxLength={10}
               className="uppercase tracking-widest text-center text-lg font-mono h-12"
               onChange={e => { e.target.value = e.target.value.toUpperCase() }}
             />
             <p className="text-sm text-muted-foreground">
-              Ask your teacher for the 7-character class code.
+              {t('classroom.invite_help')}
             </p>
           </div>
           {error && (
@@ -70,11 +72,11 @@ export function JoinClassroomDialog() {
           )}
           <div className="flex justify-end gap-2 pt-1">
             <Button type="button" variant="outline" onClick={() => setOpen(false)} className="text-base">
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button type="submit" disabled={isPending} className="text-base gap-2">
               {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-              {isPending ? 'Joining...' : 'Join'}
+              {isPending ? t('classroom.joining') : t('common.join')}
             </Button>
           </div>
         </form>

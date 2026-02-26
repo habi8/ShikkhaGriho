@@ -1,22 +1,21 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { AlertCircle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
-interface AuthErrorPageProps {
-  searchParams: Promise<{ message?: string }>
-}
-
-export default async function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
-  const { message } = await searchParams
+export default function AuthErrorPage() {
+  const { t } = useTranslation()
   return (
     <main className="flex min-h-screen items-center justify-center bg-background p-4">
       <div className="w-full max-w-md">
         <div className="mb-8 flex justify-center">
           <Image
             src="/images/logo.png"
-            alt="ShikkhaGriho"
+            alt={t('logo.alt')}
             width={56}
             height={56}
             className="object-contain"
@@ -29,17 +28,17 @@ export default async function AuthErrorPage({ searchParams }: AuthErrorPageProps
               <AlertCircle className="h-8 w-8" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Something went wrong</h1>
+              <h1 className="text-xl font-bold text-foreground">{t('auth.error.title')}</h1>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs">
-                {message ?? 'An unexpected error occurred. Please try again.'}
+                {t('auth.error.default_message')}
               </p>
             </div>
             <div className="flex w-full flex-col gap-2">
               <Link href="/auth/login" className="w-full">
-                <Button className="w-full">Try again</Button>
+                <Button className="w-full">{t('common.try_again')}</Button>
               </Link>
               <Link href="/" className="w-full">
-                <Button variant="outline" className="w-full">Go home</Button>
+                <Button variant="outline" className="w-full">{t('common.go_home')}</Button>
               </Link>
             </div>
           </CardContent>

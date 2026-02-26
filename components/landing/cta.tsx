@@ -1,58 +1,60 @@
+'use client'
+
 import { CheckCircle2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export function CTA() {
-  return (
-    <section id="about" className="relative py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-6">
+  const { t } = useTranslation()
 
-        {/* Centered intro */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <h2 className="text-3xl font-bold text-[#2E8B57] sm:text-4xl mb-6">About ShikkhaGriho</h2>
-          <p className="text-xl text-[#475569] leading-relaxed">
-            <span className="font-semibold text-[#0F172A]">ShikkhaGriho</span> is a structured digital classroom
-            platform designed for <span className="font-semibold text-[#0F172A]">modern education</span>. Inspired
-            by the meaning <span className="font-semibold text-[#0F172A]">&ldquo;Home of Education&rdquo;</span>, it
-            creates a reliable and organized digital learning space built for Bangladesh&apos;s evolving education system.
+  return (
+    <section id="about" className="relative py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-6">
+        {/* Our Story */}
+        <div className="rounded-3xl bg-gradient-to-br from-[#F0FDF4] via-white to-[#F8FAFC] px-6 py-12 text-center sm:px-10 sm:py-14 fade-in-up">
+          <h2 className="text-3xl font-bold text-[#1E293B] sm:text-5xl fade-in-up" style={{ ['--fade-delay' as any]: '80ms' }}>
+            {t('landing.cta.story_title')}
+          </h2>
+          <p className="mx-auto mt-6 max-w-[680px] text-base text-[#475569] leading-relaxed sm:text-lg fade-in-up" style={{ ['--fade-delay' as any]: '150ms' }}>
+            {t('landing.cta.story_body_1')}
+          </p>
+          <p className="mx-auto mt-4 max-w-[680px] text-base text-[#475569] leading-relaxed sm:text-lg fade-in-up" style={{ ['--fade-delay' as any]: '210ms' }}>
+            {t('landing.cta.story_body_2')}
           </p>
         </div>
 
-        {/* Split card */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] overflow-hidden">
-          <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#E2E8F0]">
-            {/* Left */}
-            <div className="p-8 md:p-10">
-              <h3 className="text-2xl font-bold text-[#2E8B57] mb-4">About ShikkhaGriho</h3>
-              <p className="text-lg text-[#475569] leading-relaxed">
-                <span className="font-semibold text-[#0F172A]">ShikkhaGriho</span> is a structured digital classroom
-                platform designed for <span className="font-semibold text-[#0F172A]">modern education</span>.
-                Inspired by the meaning <span className="font-semibold text-[#0F172A]">&ldquo;Home of Education&rdquo;</span>,
-                it creates a reliable, and organized digital learning space &mdash; built for Bangladesh&apos;s evolving education system.
-              </p>
-            </div>
+        {/* Two-column cards */}
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div
+            className="rounded-2xl bg-white p-6 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.35)] sm:p-8 fade-in-up"
+            style={{ ['--fade-delay' as any]: '120ms' }}
+          >
+            <h3 className="text-xl font-bold text-[#2E8B57] sm:text-2xl">{t('landing.cta.offer_title')}</h3>
+            <p className="mt-4 text-base text-[#475569] leading-relaxed sm:text-lg">
+              {t('landing.cta.offer_body')}
+            </p>
+          </div>
 
-            {/* Right */}
-            <div className="p-8 md:p-10">
-              <h3 className="text-2xl font-bold text-[#2E8B57] mb-6">Mission</h3>
-              <ul className="space-y-5">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-6 w-6 text-[#22C55E] shrink-0 mt-0.5" />
-                  <p className="text-lg text-[#475569] leading-relaxed">
-                    To <span className="font-semibold text-[#0F172A]">simplify digital education</span> by providing
-                    an accessible, organized, and secure classroom platform
-                  </p>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-6 w-6 text-[#22C55E] shrink-0 mt-0.5" />
-                  <p className="text-lg text-[#475569] leading-relaxed">
-                    To build the <span className="font-semibold text-[#0F172A]">most trusted digital learning
-                      environment in Bangladesh</span> where every classroom has a digital home.
-                  </p>
-                </li>
-              </ul>
-            </div>
+          <div
+            className="rounded-2xl bg-white p-6 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.35)] sm:p-8 fade-in-up"
+            style={{ ['--fade-delay' as any]: '200ms' }}
+          >
+            <h3 className="text-xl font-bold text-[#2E8B57] sm:text-2xl">{t('landing.cta.mission_title')}</h3>
+            <ul className="mt-5 space-y-4">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="mt-0.5 h-6 w-6 text-[#22C55E] shrink-0" />
+                <p className="text-base text-[#475569] leading-relaxed sm:text-lg">
+                  {t('landing.cta.mission_item_1')}
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="mt-0.5 h-6 w-6 text-[#22C55E] shrink-0" />
+                <p className="text-base text-[#475569] leading-relaxed sm:text-lg">
+                  {t('landing.cta.mission_item_2')}
+                </p>
+              </li>
+            </ul>
           </div>
         </div>
-
       </div>
     </section>
   )

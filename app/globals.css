@@ -138,3 +138,58 @@
   h4 { @apply text-xl font-semibold; color: #2E8B57; }
   p  { @apply text-base leading-relaxed; }
 }
+
+@layer utilities {
+  @keyframes soft-gradient-move {
+    0% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(6px, -8px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+  }
+
+  @keyframes present-pulse {
+    0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 10px 24px -20px rgba(34, 197, 94, 0.6); }
+    50% { transform: translateY(-4px) scale(1.03); box-shadow: 0 18px 30px -22px rgba(34, 197, 94, 0.7); }
+  }
+
+  @keyframes notif-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  @keyframes attendance-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35); }
+    50% { box-shadow: 0 0 24px 4px rgba(34, 197, 94, 0.25); }
+  }
+
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(16px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .soft-gradient-move {
+    animation: soft-gradient-move 12s ease-in-out infinite;
+  }
+
+  .present-badge {
+    animation: present-pulse 3s ease-in-out infinite;
+  }
+
+  .notif-bounce {
+    animation: notif-bounce 2.4s ease-in-out infinite;
+  }
+
+  .attendance-glow {
+    animation: attendance-glow 3s ease-in-out infinite;
+  }
+
+  .fade-in-up {
+    animation: fade-in-up 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--fade-delay, 0ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in-up {
+      animation: none;
+    }
+  }
+}

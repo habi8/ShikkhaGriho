@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter, Hind_Siliguri } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { cookies } from 'next/headers'
 import './globals.css'
 import { FloatingElements } from '@/components/landing/floating-elements'
+import { I18nProvider } from '@/components/i18n-provider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,17 +26,23 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const cookieStore = await cookies()
+  const language = cookieStore.get('sg_lang')?.value
+  const lang = language === 'bn' || language === 'en' ? language : 'en'
+
   return (
-    <html lang="bn">
+    <html lang={lang}>
       <body className={`${inter.variable} ${hindSiliguri.variable} font-sans antialiased bg-transparent text-foreground relative`}>
-        <FloatingElements />
-        {children}
-        <Analytics />
+        <I18nProvider initialLanguage={lang}>
+          <FloatingElements />
+          {children}
+          <Analytics />
+        </I18nProvider>
       </body>
     </html>
   )

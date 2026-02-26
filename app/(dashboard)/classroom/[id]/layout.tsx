@@ -38,7 +38,7 @@ export default async function ClassroomLayout({ children, params }: ClassroomLay
   }
 
   return (
-    <div className="flex flex-col min-h-full">
+    <div className="flex flex-col min-h-full px-4 sm:px-6 lg:px-8">
       <ClassroomHeader
         classroom={{ ...classroom, teacher: classroom.profiles }}
         isTeacher={isTeacher}

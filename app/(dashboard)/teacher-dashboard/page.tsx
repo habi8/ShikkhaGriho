@@ -1,10 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { ClassroomCard } from '@/components/classroom-card'
-import { CreateClassroomDialog } from '@/components/create-classroom-dialog'
-import { EmptyState } from '@/components/empty-state'
+import { TeacherDashboardClient } from '@/components/dashboard/teacher-dashboard-client'
 import { Classroom } from '@/types'
-import { Plus } from 'lucide-react'
 
 export default async function TeacherDashboardPage() {
   const supabase = await createClient()
@@ -32,38 +29,5 @@ export default async function TeacherDashboardPage() {
   const profile = user.user_metadata
   const firstName = (profile?.full_name as string)?.split(' ')[0] ?? 'Teacher'
 
-  return (
-    <div className="p-6 sm:p-8 max-w-6xl mx-auto">
-      {/* Colored header banner */}
-      <div className="mb-8 rounded-2xl px-7 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        style={{ background: 'linear-gradient(120deg, #2E8B57 0%, #228B22 100%)' }}>
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Teacher Dashboard</p>
-          <h1 className="text-3xl font-bold text-white">
-            Welcome back, {firstName}
-          </h1>
-          <p className="mt-1.5 text-base" style={{ color: 'rgba(255,255,255,0.75)' }}>
-            You have {enriched.length} classroom{enriched.length !== 1 ? 's' : ''}
-          </p>
-        </div>
-        <CreateClassroomDialog triggerClassName="bg-white text-[#2E8B57] hover:bg-white/90 shadow-sm" />
-      </div>
-
-      {/* Classrooms grid */}
-      {enriched.length === 0 ? (
-        <EmptyState
-          title="No classrooms yet"
-          description="Create your first classroom to start sharing announcements, taking attendance, and managing students."
-          action={<CreateClassroomDialog />}
-          icon={<Plus className="h-7 w-7" />}
-        />
-      ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {enriched.map((classroom) => (
-            <ClassroomCard key={classroom.id} classroom={classroom} role="teacher" />
-          ))}
-        </div>
-      )}
-    </div>
-  )
+  return <TeacherDashboardClient firstName={firstName} classrooms={enriched} />
 }
