@@ -1,12 +1,11 @@
 {
-  "skey": "This is a test string",
   "language": {
     "switcher_label": "Language",
     "english": "EN",
     "bangla": "BN"
   },
   "brand": {
-    "name": "ShikkhaGriho"
+    "name": "Shikkha"
   },
   "logo": {
     "alt": "ShikkhaGriho Logo",
