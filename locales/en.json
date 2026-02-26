@@ -1,0 +1,369 @@
+{
+  "skey": "This is a test string",
+  "language": {
+    "switcher_label": "Language",
+    "english": "EN",
+    "bangla": "BN"
+  },
+  "brand": {
+    "name": "ShikkhaGriho"
+  },
+  "logo": {
+    "alt": "ShikkhaGriho Logo",
+    "name": "ShikkhaGriho"
+  },
+  "nav": {
+    "about": "About",
+    "reviews": "Review",
+    "login": "Login",
+    "get_started": "Get Started",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "sign_out": "Sign out",
+    "close_menu": "Close menu",
+    "open_menu": "Open menu",
+    "my_classrooms": "My Classrooms"
+  },
+  "common": {
+    "get_started": "Get Started",
+    "login": "Login",
+    "post": "Post",
+    "cancel": "Cancel",
+    "create": "Create",
+    "join": "Join",
+    "save_changes": "Save changes",
+    "sign_out": "Sign out",
+    "open": "Open",
+    "closed": "Closed",
+    "live": "Live",
+    "present": "Present",
+    "pending": "Pending",
+    "unknown": "Unknown",
+    "try_again": "Try again",
+    "go_home": "Go home",
+    "submitting": "Submitting...",
+    "uploading": "Uploading",
+    "previous": "Previous",
+    "next": "Next",
+    "more_pages": "More pages",
+    "more": "More",
+    "loading": "Loading",
+    "close": "Close",
+    "students": "{{count}} student",
+    "students_plural": "{{count}} students"
+  },
+  "errors": {
+    "generic_try_again": "Something went wrong. Please try again.",
+    "login_failed": "Login failed. Please check your credentials and try again.",
+    "signup_failed": "Sign up failed. Please try again.",
+    "review_required": "Name and review are required.",
+    "review_submit_failed": "Failed to submit your review. Please try again.",
+    "generic": "Something went wrong.",
+    "invalid_invite_code": "Invalid invite code. Please check and try again.",
+    "already_member": "Could not join classroom. You may already be a member.",
+    "upload_failed": "Failed to upload file.",
+    "carousel_context": "useCarousel must be used within a <Carousel />",
+    "sidebar_context": "useSidebar must be used within a SidebarProvider."
+  },
+  "roles": {
+    "teacher": "Teacher",
+    "student": "Student"
+  },
+  "auth": {
+    "fields": {
+      "email": "Email address",
+      "password": "Password",
+      "full_name": "Full name"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "********",
+      "password_length": "At least 6 characters",
+      "full_name": "Your full name"
+    },
+    "login": {
+      "tagline": "ShikkhaGriho - Your Classroom, Your Way",
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account to continue",
+      "signing_in": "Signing in...",
+      "sign_in": "Sign in",
+      "no_account": "Don't have an account?",
+      "create_one": "Create one"
+    },
+    "signup": {
+      "tagline": "ShikkhaGriho - Join your classroom today",
+      "title": "Create an account",
+      "subtitle": "Fill in the details below to get started",
+      "role_label": "I am a...",
+      "creating": "Creating account...",
+      "create_account": "Create account",
+      "have_account": "Already have an account?",
+      "sign_in": "Sign in"
+    },
+    "signup_success": {
+      "title": "Check your email",
+      "body": "We sent a confirmation link to your email address. Please click it to activate your account.",
+      "back_to_signin": "Back to sign in"
+    },
+    "error": {
+      "title": "Something went wrong",
+      "default_message": "An unexpected error occurred. Please try again."
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "Transforming Education in Bangladesh",
+      "title_line1": "Empowering Digital",
+      "title_line2": "Classrooms",
+      "subtitle": "A smarter way to manage, teach, and learn online, designed for the modern classroom in Bangladesh.",
+      "dashboard_title": "ShikkhaGriho Dashboard",
+      "nav_title": "Navigation",
+      "nav": {
+        "overview": "Overview",
+        "classrooms": "Classrooms",
+        "attendance": "Attendance",
+        "assignments": "Assignments",
+        "members": "Members"
+      },
+      "classroom_title": "Math 101",
+      "classroom_subtitle": "Classroom dashboard",
+      "announcement_title": "Announcement",
+      "announcement_body": "Quiz on Thursday. Review chapters 3-4.",
+      "attendance_title": "Attendance",
+      "attendance": {
+        "present": "Present {{count}}",
+        "late": "Late {{count}}",
+        "absent": "Absent {{count}}"
+      },
+      "invite_title": "Invite Members",
+      "class_code": "Class code",
+      "sample_code": "SG-4K7P",
+      "attendance_today": "Today - Math 101",
+      "sample_student_1": "Nusrat A.",
+      "sample_student_2": "Rahim H.",
+      "sample_student_3": "Farah T.",
+      "present_notice": "One student marked present",
+      "msg_short": "MSG"
+    },
+    "cta": {
+      "story_title": "Our Story",
+      "story_body_1": "ShikkhaGriho was created to bridge the gap between traditional classrooms and the digital future of education in Bangladesh. As learning environments evolve, institutions need structured, reliable, and simple digital tools that enhance - not complicate - the teaching experience.",
+      "story_body_2": "Inspired by the meaning Home of Education, ShikkhaGriho provides a focused and organized digital space where teachers can manage classrooms efficiently and students can engage meaningfully.",
+      "offer_title": "What We Offer",
+      "offer_body": "ShikkhaGriho combines classroom management, attendance tracking, announcements, and smart member systems into one unified platform. Designed for simplicity and scalability, it allows institutions to transition into digital education seamlessly.",
+      "mission_title": "Our Mission",
+      "mission_item_1": "To simplify digital education by providing a secure and structured classroom platform.",
+      "mission_item_2": "To empower institutions across Bangladesh with accessible and modern learning tools."
+    },
+    "features": {
+      "title": "Powerful Classroom Tools",
+      "items": {
+        "management": {
+          "title": "Classroom Management",
+          "description": "Create and manage multiple classrooms with ease."
+        },
+        "announcements": {
+          "title": "Announcements & Resources",
+          "description": "Share updates, meeting links, and downloadable files."
+        },
+        "members": {
+          "title": "Smart Member System",
+          "description": "Add students via email, username, or invitation link."
+        },
+        "attendance": {
+          "title": "Attendance Tracking",
+          "description": "Open attendance, let students mark presence, verify instantly."
+        },
+        "notifications": {
+          "title": "Real-Time Notifications",
+          "description": "Stay updated on comments, announcements, and invites."
+        },
+        "language": {
+          "title": "Dual Language Support",
+          "description": "Seamless English & Bangla experience."
+        }
+      }
+    },
+    "reviews": {
+      "title": "What Our Visitors Say",
+      "subtitle": "Read reviews from our community or leave your own feedback.",
+      "recent": "Recent Reviews",
+      "empty": "No reviews yet. Be the first to review!",
+      "show_all": "Show all reviews",
+      "all": "All Reviews",
+      "leave_title": "Leave a Review",
+      "leave_subtitle": "Your feedback is valuable to us. Let us know how we can improve!",
+      "fields": {
+        "name": "Your Name",
+        "review": "Your Review"
+      },
+      "placeholders": {
+        "name": "John Doe",
+        "review": "Tell us what you think..."
+      },
+      "success": "Thank you for submitting your review!",
+      "submit": "Submit Review"
+    },
+    "footer": {
+      "get_in_touch": "Get in Touch",
+      "email": "support@shikkhagriho.com",
+      "phone": "+830-1234-567990",
+      "tagline": "Your Digital Classrooms",
+      "copyright": "(c) {{year}} ShikkhaGriho. Built for Bangladesh."
+    }
+  },
+  "dashboard": {
+    "teacher": {
+      "title": "Teacher Dashboard",
+      "welcome": "Welcome back, {{name}}",
+      "classroom_count": "You have {{count}} classroom",
+      "classroom_count_plural": "You have {{count}} classrooms",
+      "empty_title": "No classrooms yet",
+      "empty_description": "Create your first classroom to start sharing announcements, taking attendance, and managing students."
+    },
+    "student": {
+      "title": "Student Dashboard",
+      "welcome": "Welcome back, {{name}}",
+      "classroom_count": "You are enrolled in {{count}} classroom",
+      "classroom_count_plural": "You are enrolled in {{count}} classrooms",
+      "empty_title": "Not enrolled in any classrooms",
+      "empty_description": "Ask your teacher for a class code and join your first classroom."
+    }
+  },
+  "classroom": {
+    "create_title": "Create Classroom",
+    "create_new": "Create a new classroom",
+    "creating": "Creating...",
+    "join_title": "Join Classroom",
+    "join_dialog_title": "Join a classroom",
+    "joining": "Joining...",
+    "invite_help": "Ask your teacher for the 7-character class code.",
+    "fields": {
+      "name": "Class name",
+      "subject": "Subject",
+      "section": "Section",
+      "room": "Room",
+      "description": "Description",
+      "theme_color": "Theme Color",
+      "invite_code": "Class code"
+    },
+    "placeholders": {
+      "name": "e.g. Mathematics Grade 10",
+      "subject": "e.g. Mathematics",
+      "section": "e.g. A",
+      "room": "e.g. 101",
+      "description": "Brief description of this class...",
+      "invite_code": "e.g. ABC1234"
+    },
+    "select_color": "Select color {{color}}",
+    "announcements": {
+      "placeholder": "Share something with your class...",
+      "empty_title": "No announcements yet",
+      "empty_teacher": "Post your first announcement above.",
+      "empty_student": "Your teacher has not posted anything yet.",
+      "delete": "Delete announcement",
+      "add_comment": "Add a comment...",
+      "comment_count": "{{count}} comment",
+      "comment_count_plural": "{{count}} comments"
+    },
+    "tabs": {
+      "announcements": "Announcements",
+      "resources": "Resources",
+      "members": "Members",
+      "attendance": "Attendance",
+      "about": "About",
+      "settings": "Settings"
+    },
+    "section_label": "Section",
+    "leave_confirm": "Are you sure you want to leave this classroom?",
+    "leave_button": "Leave Classroom",
+    "about": {
+      "students_enrolled": "Students enrolled",
+      "created": "Created",
+      "teacher": "Teacher",
+      "invite_code": "Invite code",
+      "share_with_students": "Share with students"
+    },
+    "members": {
+      "invite_code_label": "Class invite code",
+      "students_count": "Students ({{count}})",
+      "empty_title": "No students yet",
+      "empty_description": "Share the invite code with students to let them join.",
+      "unknown_student": "Unknown student",
+      "remove": "Remove"
+    },
+    "settings": {
+      "title": "Classroom details",
+      "danger_zone": "Danger zone",
+      "danger_body": "Deleting this classroom is permanent. All announcements, comments, attendance records, and member data will be removed. This action cannot be undone.",
+      "delete_classroom": "Delete classroom"
+    }
+  },
+  "resources": {
+    "title": "Classroom Materials",
+    "empty_title": "No resources yet",
+    "empty_teacher": "Upload files to share them with your students.",
+    "empty_student": "Your teacher has not uploaded any materials yet.",
+    "download": "Download",
+    "uploaded": "Uploaded {{time}}",
+    "size": {
+      "zero": "0 Bytes",
+      "bytes": "Bytes",
+      "kb": "KB",
+      "mb": "MB",
+      "gb": "GB"
+    },
+    "upload": {
+      "select_file": "Click to select a file",
+      "file_types": "PDF, Images, Excel, Word (Max 50MB)",
+      "button": "Upload Resource"
+    }
+  },
+  "attendance": {
+    "start_title": "Start new attendance session",
+    "session_title": "Session title",
+    "session_placeholder": "e.g. Class 1 - Chapter 3",
+    "date": "Date",
+    "start_button": "Start session",
+    "default_session_title": "Attendance Session",
+    "no_students": "No students enrolled yet.",
+    "close_session": "Close session",
+    "student_notice": "Attendance is being taken. Your teacher will mark your status shortly.",
+    "past_sessions": "Past sessions ({{count}})",
+    "empty_title": "No completed sessions yet",
+    "empty_teacher": "Start a session and close it to see history here.",
+    "empty_student": "No attendance has been recorded yet.",
+    "status": {
+      "present": "Present",
+      "late": "Late",
+      "absent": "Absent"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "classrooms_created": "Classrooms created",
+    "classrooms_enrolled": "Classrooms enrolled",
+    "member_since": "Member since"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Go to previous page",
+    "next": "Go to next page"
+  },
+  "breadcrumb": {
+    "label": "Breadcrumb"
+  },
+  "carousel": {
+    "previous_slide": "Previous slide",
+    "next_slide": "Next slide"
+  },
+  "sidebar": {
+    "title": "Sidebar",
+    "description": "Displays the mobile sidebar.",
+    "toggle": "Toggle Sidebar"
+  },
+  "command": {
+    "title": "Command Palette",
+    "description": "Search for a command to run..."
+  }
+}
