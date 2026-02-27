@@ -79,19 +79,19 @@ export function Reviews({ initialReviews }: { initialReviews: Review[] }) {
 
                         <div className="space-y-4">
                             {initialReviews.length === 0 ? (
-                                    <div className="text-center py-10 bg-white rounded-xl border border-[#E2E8F0] fade-in-up" style={{ ['--fade-delay' as any]: '140ms' }}>
+                                    <div className="text-center py-10 fade-in-up" style={{ ['--fade-delay' as any]: '140ms' }}>
                                     <p className="text-[#475569]">{t('landing.reviews.empty')}</p>
                                 </div>
                             ) : (
                                 visibleReviews.map((item, index) => (
                                     <div
                                         key={item.id}
-                                        className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm fade-in-up"
+                                        className="pb-4 border-b border-[#E2E8F0]/60 fade-in-up"
                                         style={{ ['--fade-delay' as any]: `${120 + index * 80}ms` }}
                                     >
                                         <p className="text-[#475569] leading-relaxed italic">"{item.review}"</p>
                                         <div className="mt-4 flex items-center gap-3">
-                                            <div className="h-8 w-8 bg-[#E2E8F0] rounded-full flex items-center justify-center font-bold text-[#2E8B57] text-sm shrink-0">
+                                            <div className="h-8 w-8 bg-[#F1F5F9] rounded-full flex items-center justify-center font-bold text-[#2E8B57] text-sm shrink-0">
                                                 {item.name.charAt(0).toUpperCase()}
                                             </div>
                                             <p className="font-semibold text-[#0F172A]">{item.name}</p>
@@ -118,7 +118,7 @@ export function Reviews({ initialReviews }: { initialReviews: Review[] }) {
                                         {initialReviews.map((item, index) => (
                                             <div
                                                 key={item.id}
-                                                className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-sm fade-in-up"
+                                                className="pb-4 border-b border-[#E2E8F0]/60 fade-in-up"
                                                 style={{ ['--fade-delay' as any]: `${80 + index * 60}ms` }}
                                             >
                                                 <p className="text-[#475569] leading-relaxed italic">"{item.review}"</p>

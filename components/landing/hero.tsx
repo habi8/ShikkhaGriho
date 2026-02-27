@@ -182,38 +182,38 @@ export function Hero() {
                 </div>
 
                 {/* Mobile mockup */}
-                <div className="relative mx-auto h-[370px] w-[min(24vw,200px)] shrink-0 rounded-[2rem] border-2 border-black bg-white shadow-[0_16px_40px_-24px_rgba(15,23,42,0.5)] sm:mt-8 sm:h-[400px] sm:w-[200px]">
+                <div className="relative mx-auto h-[360px] w-[min(32vw,200px)] shrink-0 rounded-[2rem] border-2 border-black bg-white shadow-[0_16px_40px_-24px_rgba(15,23,42,0.5)] sm:mt-8 sm:h-[400px] sm:w-[200px] overflow-hidden">
                   <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-[#E2E8F0]" />
-                  <div className="space-y-3 p-4">
+                  <div className="space-y-3 p-3 sm:p-4">
                     <div className="flex items-center justify-center">
                       <Logo size={28} href="/" textSizeClass="text-[11px]" textColor="#14532D" />
                     </div>
-                    <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-3 py-2 text-[10px] font-semibold text-[#64748B]">
-                      <span>{t('landing.hero.nav.overview')}</span>
-                      <span className="text-[#2E8B57]">{t('landing.hero.nav.attendance')}</span>
-                      <span>{t('landing.hero.nav.members')}</span>
+                    <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-2 py-2 text-[9px] font-semibold text-[#64748B] sm:px-3 sm:text-[10px]">
+                      <span className="truncate">{t('landing.hero.nav.overview')}</span>
+                      <span className="truncate text-[#2E8B57]">{t('landing.hero.nav.attendance')}</span>
+                      <span className="truncate">{t('landing.hero.nav.members')}</span>
                     </div>
-                    <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3">
-                      <p className="text-xs font-semibold text-[#2E8B57]">{t('landing.hero.attendance_title')}</p>
-                      <p className="mt-1 text-[10px] text-[#64748B]">{t('landing.hero.attendance_today')}</p>
+                    <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-2 sm:p-3">
+                      <p className="text-[11px] font-semibold text-[#2E8B57] sm:text-xs">{t('landing.hero.attendance_title')}</p>
+                      <p className="mt-1 text-[9px] text-[#64748B] sm:text-[10px]">{t('landing.hero.attendance_today')}</p>
                     </div>
                     <div className="space-y-2">
-                      <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-white px-3 py-2">
-                        <span className="text-xs font-semibold text-[#0F172A]">{t('landing.hero.sample_student_1')}</span>
-                        <span className="rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[10px] font-semibold text-[#166534]">
+                      <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-white px-2.5 py-2 sm:px-3">
+                        <span className="text-[11px] font-semibold text-[#0F172A] sm:text-xs">{t('landing.hero.sample_student_1')}</span>
+                        <span className="rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[9px] font-semibold text-[#166534] sm:text-[10px]">
                           {t('common.present')}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-white px-3 py-2">
-                        <span className="text-xs font-semibold text-[#0F172A]">{t('landing.hero.sample_student_2')}</span>
-                        <span className="text-[10px] text-[#94A3B8]">{t('common.pending')}</span>
+                      <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-white px-2.5 py-2 sm:px-3">
+                        <span className="text-[11px] font-semibold text-[#0F172A] sm:text-xs">{t('landing.hero.sample_student_2')}</span>
+                        <span className="text-[9px] text-[#94A3B8] sm:text-[10px]">{t('common.pending')}</span>
                       </div>
-                      <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-white px-3 py-2">
-                        <span className="text-xs font-semibold text-[#0F172A]">{t('landing.hero.sample_student_3')}</span>
-                        <span className="text-[10px] text-[#94A3B8]">{t('common.pending')}</span>
+                      <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-white px-2.5 py-2 sm:px-3">
+                        <span className="text-[11px] font-semibold text-[#0F172A] sm:text-xs">{t('landing.hero.sample_student_3')}</span>
+                        <span className="text-[9px] text-[#94A3B8] sm:text-[10px]">{t('common.pending')}</span>
                       </div>
                     </div>
-                    <div className="rounded-xl border border-[#22C55E]/30 bg-[#F0FDF4] px-3 py-2 text-[11px] font-semibold text-[#166534]">
+                    <div className="rounded-xl border border-[#22C55E]/30 bg-[#F0FDF4] px-2.5 py-2 text-[10px] font-semibold text-[#166534] sm:px-3 sm:text-[11px]">
                       {t('landing.hero.present_notice')}
                     </div>
                   </div>

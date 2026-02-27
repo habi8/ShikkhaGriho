@@ -56,10 +56,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <main
-      className="flex min-h-screen items-center justify-center p-4 py-10"
-      style={{ background: '#F8FAFC' }}
-    >
+    <main className="flex min-h-screen items-center justify-center p-4 py-10">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-4 fade-in-up">

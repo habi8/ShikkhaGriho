@@ -130,7 +130,7 @@ export default function AvatarSetupPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-4" style={{ background: '#F8FAFC' }}>
+    <main className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Card className="border-0 shadow-2xl rounded-2xl bg-white/95">
           <CardHeader className="pb-3 pt-6 px-6">
