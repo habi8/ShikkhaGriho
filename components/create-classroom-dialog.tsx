@@ -18,22 +18,23 @@ import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
 const CLASSROOM_COLORS = [
-  '#1e40af', // Blue
-  '#15803d', // Green
-  '#b45309', // Orange
-  '#9f1239', // Red
-  '#6d28d9', // Purple
-  '#0e7490', // Cyan
-  '#be185d', // Pink
-  '#0f766e', // Teal
-  // Gradients
-  'linear-gradient(135deg, #16A34A 0%, #22C55E 55%, #86EFAC 100%)',
-  'linear-gradient(135deg, #1E3A8A 0%, #2563EB 55%, #93C5FD 100%)',
-  'linear-gradient(135deg, #9F1239 0%, #DB2777 55%, #FBCFE8 100%)',
-  'linear-gradient(135deg, #0F766E 0%, #14B8A6 55%, #99F6E4 100%)',
-  'linear-gradient(135deg, #92400E 0%, #F59E0B 55%, #FDE68A 100%)',
-  'linear-gradient(135deg, #4C1D95 0%, #7C3AED 55%, #C4B5FD 100%)',
-  'linear-gradient(135deg, #14532D 0%, #22C55E 60%, #ECFDF5 100%)',
+  '#FFF3E0', // Cream
+  '#E5E7EB', // Ash
+  '#F1F5F9', // Light gray
+  '#EADBC8', // Light brown
+  '#EDE9FE', // Lavender
+  '#FCE7F3', // Baby pink
+  '#FFE8D6', // Light orange
+  '#E0F2FE', // Sky blue
+  // Slightly deeper pastels
+  '#FDE68A', // Soft amber
+  '#FBCFE8', // Soft rose
+  '#C7D2FE', // Periwinkle
+  '#BFDBFE', // Soft blue
+  '#A7F3D0', // Mint
+  '#F5D0A9', // Warm peach
+  '#D8B4FE', // Soft violet
+  '#C4B5FD', // Lavender blue
 ]
 
 export function CreateClassroomDialog({ triggerClassName, triggerVariant = "default" }: { triggerClassName?: string, triggerVariant?: "default" | "secondary" | "outline" | "ghost" }) {
@@ -116,7 +117,7 @@ export function CreateClassroomDialog({ triggerClassName, triggerVariant = "defa
                   style={{ background: color }}
                   aria-label={t('classroom.select_color', { color })}
                 >
-                  {selectedColor === color && <Check className="h-4 w-4 text-white" />}
+                  {selectedColor === color && <Check className="h-4 w-4 text-[#14532D]" />}
                 </button>
               ))}
             </div>

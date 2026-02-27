@@ -161,6 +161,16 @@
     50% { box-shadow: 0 0 24px 4px rgba(34, 197, 94, 0.25); }
   }
 
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); transform: scale(1); }
+    50% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.15); transform: scale(1.04); }
+  }
+
+  @keyframes live-breathe {
+    0%, 100% { background-color: rgba(220, 38, 38, 0.08); }
+    50% { background-color: rgba(220, 38, 38, 0.18); }
+  }
+
   @keyframes fade-in-up {
     0% { opacity: 0; transform: translateY(16px); }
     100% { opacity: 1; transform: translateY(0); }
@@ -181,6 +191,13 @@
 
   .attendance-glow {
     animation: attendance-glow 3s ease-in-out infinite;
+  }
+
+  .live-badge {
+    background: rgba(220, 38, 38, 0.1);
+    color: #DC2626;
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    animation: live-pulse 1.6s ease-in-out infinite, live-breathe 2.4s ease-in-out infinite;
   }
 
   .fade-in-up {
@@ -287,7 +304,8 @@
     .hero-tab-page-attendance,
     .hero-tab-page-members,
     .hero-tab-page-classrooms,
-    .hero-panel-click {
+    .hero-panel-click,
+    .live-badge {
       animation: none;
     }
   }

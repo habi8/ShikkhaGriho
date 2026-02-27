@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Users, X } from 'lucide-react'
+import { Mail, Phone, User, Users, X } from 'lucide-react'
 import { EmptyState } from '@/components/empty-state'
 import { removeMemberByForm } from '@/lib/actions/classroom'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { useState } from 'react'
 
 function initials(name: string | null) {
@@ -126,33 +126,48 @@ export function MembersClient({
       )}
 
       <Dialog open={!!selectedMember} onOpenChange={(open) => { if (!open) setSelectedMember(null) }}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-lg">{t('classroom.members.profile_title')}</DialogTitle>
-          </DialogHeader>
+        <DialogContent className="sm:max-w-sm p-0 overflow-hidden" showCloseButton={false}>
+          <DialogTitle className="sr-only">{t('classroom.members.profile_title')}</DialogTitle>
           {selectedMember && (
-            <div className="flex items-center gap-4">
-              <Avatar className="h-16 w-16">
-                {selectedMember.avatar_url && (
-                  <AvatarImage src={selectedMember.avatar_url} alt={selectedMember.full_name ?? t('common.unknown')} />
+            <div className="flex flex-col">
+              <div className="relative aspect-square w-full bg-[#F8FAFC]">
+                <DialogClose className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-muted-foreground shadow-md transition hover:bg-white hover:text-foreground">
+                  <X className="h-4 w-4" />
+                </DialogClose>
+                {selectedMember.avatar_url ? (
+                  <img
+                    src={selectedMember.avatar_url}
+                    alt={selectedMember.full_name ?? t('common.unknown')}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-primary text-2xl font-bold">
+                      {initials(selectedMember.full_name ?? null)}
+                    </div>
+                  </div>
                 )}
-                <AvatarFallback className="bg-primary/10 text-primary text-xl font-bold">
-                  {initials(selectedMember.full_name ?? null)}
-                </AvatarFallback>
-              </Avatar>
-              <div className="space-y-1">
-                <p className="text-base font-semibold text-foreground">
-                  {selectedMember.full_name ?? t('common.unknown')}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {selectedMember.email ?? t('classroom.members.not_provided')}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {selectedMember.phone ?? t('classroom.members.not_provided')}
-                </p>
-                <Badge variant="secondary" className="capitalize">
+              </div>
+              <div className="space-y-4 px-5 py-5">
+                <Badge variant="secondary" className="w-fit capitalize">
                   {selectedMember.role === 'teacher' ? t('roles.teacher') : t('roles.student')}
                 </Badge>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <User className="h-4 w-4 text-muted-foreground" />
+                    <span className="font-semibold">
+                      {selectedMember.full_name ?? t('common.unknown')}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Mail className="h-4 w-4" />
+                    <span>{selectedMember.email ?? t('classroom.members.not_provided')}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Phone className="h-4 w-4" />
+                    <span>{selectedMember.phone ?? t('classroom.members.not_provided')}</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}

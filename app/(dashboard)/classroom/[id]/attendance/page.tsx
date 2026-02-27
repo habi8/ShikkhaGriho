@@ -33,6 +33,22 @@ export default async function AttendancePage({ params }: PageProps) {
 
   const openSession = (sessions ?? []).find((s: any) => s.is_open)
 
+  const sessionIds = (sessions ?? []).map((s: any) => s.id)
+
+  let summaryRecords: Record<string, Record<string, string>> = {}
+  if (sessionIds.length) {
+    const { data: records } = await supabase
+      .from('attendance_records')
+      .select('session_id, student_id, status')
+      .in('session_id', sessionIds)
+
+    summaryRecords = (records ?? []).reduce((acc: Record<string, Record<string, string>>, record: any) => {
+      if (!acc[record.session_id]) acc[record.session_id] = {}
+      acc[record.session_id][record.student_id] = record.status
+      return acc
+    }, {})
+  }
+
   let openRecords: Record<string, string> = {}
   if (openSession) {
     const { data: records } = await supabase
@@ -50,6 +66,7 @@ export default async function AttendancePage({ params }: PageProps) {
       students={students}
       openSession={openSession ?? null}
       openRecords={openRecords}
+      summaryRecords={summaryRecords}
     />
   )
 }

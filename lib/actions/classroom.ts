@@ -21,7 +21,24 @@ export async function createClassroom(formData: FormData) {
   const section = formData.get('section') as string
   const room = formData.get('room') as string
   const customColor = formData.get('cover_color') as string
-  const colors = ['#1e40af', '#15803d', '#b45309', '#9f1239', '#6d28d9', '#0e7490', '#be185d', '#0f766e']
+  const colors = [
+    '#FFF3E0',
+    '#E5E7EB',
+    '#F1F5F9',
+    '#EADBC8',
+    '#EDE9FE',
+    '#FCE7F3',
+    '#FFE8D6',
+    '#E0F2FE',
+    '#FDE68A',
+    '#FBCFE8',
+    '#C7D2FE',
+    '#BFDBFE',
+    '#A7F3D0',
+    '#F5D0A9',
+    '#D8B4FE',
+    '#C4B5FD',
+  ]
   const cover_color = customColor || colors[Math.floor(Math.random() * colors.length)]
   const invite_code = generateInviteCode()
 

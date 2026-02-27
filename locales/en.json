@@ -374,6 +374,7 @@
     "empty_title": "No completed sessions yet",
     "empty_teacher": "Start a session and close it to see history here.",
     "empty_student": "No attendance has been recorded yet.",
+    "summary_title": "Attendance summary",
     "status": {
       "present": "Present",
       "late": "Late",
