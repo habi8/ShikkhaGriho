@@ -36,6 +36,7 @@ export default function SignUpPage() {
       password,
       options: {
         data: { full_name, role },
+        emailRedirectTo: 'https://shikkhagriho.vercel.app/auth/login',
       },
     })
 
