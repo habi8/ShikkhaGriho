@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 function generateInviteCode(length = 7): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
@@ -82,7 +83,14 @@ export async function postAnnouncement(formData: FormData) {
 
 export async function deleteAnnouncement(id: string, classroom_id: string) {
   const supabase = await createClient()
-  await supabase.from('announcements').delete().eq('id', id)
+  const { error: commentsError } = await supabase
+    .from('comments')
+    .delete()
+    .eq('announcement_id', id)
+  if (commentsError) throw commentsError
+
+  const { error } = await supabase.from('announcements').delete().eq('id', id)
+  if (error) throw error
   revalidatePath(`/classroom/${classroom_id}`)
 }
 
@@ -164,11 +172,70 @@ export async function removeMemberByForm(formData: FormData) {
   await removeMember(user_id, classroom_id)
 }
 
+async function purgeClassroomData(classroom_id: string) {
+  const admin = createAdminClient()
+
+  const { data: resources } = await admin
+    .from('resources')
+    .select('id, file_path')
+    .eq('classroom_id', classroom_id)
+
+  if (resources?.length) {
+    const paths = resources.map((r) => r.file_path).filter(Boolean) as string[]
+    if (paths.length) {
+      await admin.storage.from('resources').remove(paths)
+    }
+  }
+
+  const { data: announcements } = await admin
+    .from('announcements')
+    .select('id')
+    .eq('classroom_id', classroom_id)
+
+  if (announcements?.length) {
+    const announcementIds = announcements.map((a) => a.id)
+    await admin.from('comments').delete().in('announcement_id', announcementIds)
+  }
+
+  const { data: sessions } = await admin
+    .from('attendance_sessions')
+    .select('id')
+    .eq('classroom_id', classroom_id)
+
+  if (sessions?.length) {
+    const sessionIds = sessions.map((s) => s.id)
+    await admin.from('attendance_records').delete().in('session_id', sessionIds)
+  }
+
+  await admin.from('attendance_sessions').delete().eq('classroom_id', classroom_id)
+  await admin.from('announcements').delete().eq('classroom_id', classroom_id)
+  await admin.from('resources').delete().eq('classroom_id', classroom_id)
+  await admin.from('classroom_members').delete().eq('classroom_id', classroom_id)
+  await admin.from('classrooms').delete().eq('id', classroom_id)
+}
+
 export async function deleteClassroom(classroom_id: string) {
   const supabase = await createClient()
-  await supabase.from('classrooms').delete().eq('id', classroom_id)
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/auth/login')
+
+  const { data: classroom, error } = await supabase
+    .from('classrooms')
+    .select('id, teacher_id')
+    .eq('id', classroom_id)
+    .single()
+
+  if (error || !classroom || classroom.teacher_id !== user.id) {
+    throw new Error('Not authorized to delete this classroom.')
+  }
+
+  await purgeClassroomData(classroom_id)
   revalidatePath('/teacher-dashboard')
   redirect('/teacher-dashboard')
+}
+
+export async function purgeClassroomForAccount(classroom_id: string) {
+  await purgeClassroomData(classroom_id)
 }
 export async function leaveClassroom(formData: FormData) {
   const supabase = await createClient()

@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '../supabase/admin'
+import { purgeClassroomForAccount } from '@/lib/actions/classroom'
 
 export async function signOut() {
   const supabase = await createClient()
@@ -18,8 +19,18 @@ export async function deleteAccount() {
   const admin = createAdminClient()
 
   // Clean up user-linked data first to avoid orphaned rows.
+  const { data: teacherClassrooms } = await admin
+    .from('classrooms')
+    .select('id')
+    .eq('teacher_id', user.id)
+
+  if (teacherClassrooms?.length) {
+    for (const classroom of teacherClassrooms) {
+      await purgeClassroomForAccount(classroom.id)
+    }
+  }
+
   await admin.from('classroom_members').delete().eq('student_id', user.id)
-  await admin.from('classrooms').delete().eq('teacher_id', user.id)
   await admin.from('profiles').delete().eq('id', user.id)
 
   const { error } = await admin.auth.admin.deleteUser(user.id)

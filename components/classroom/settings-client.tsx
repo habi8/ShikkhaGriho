@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { AlertTriangle } from 'lucide-react'
+import { useState } from 'react'
+import { Spinner } from '@/components/ui/spinner'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,6 +38,8 @@ export function SettingsClient({
   deleteClassroom: () => Promise<void>
 }) {
   const { t } = useTranslation()
+  const [deleting, setDeleting] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
 
   return (
     <div className="p-6 sm:p-8 max-w-5xl w-full mx-auto space-y-8">
@@ -84,9 +88,20 @@ export function SettingsClient({
         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
           {t('classroom.settings.danger_body')}
         </p>
-        <AlertDialog>
+        <AlertDialog
+          open={deleteOpen}
+          onOpenChange={(open) => {
+            if (deleting) return
+            setDeleteOpen(open)
+          }}
+        >
           <AlertDialogTrigger asChild>
-            <Button type="button" variant="destructive" size="sm">
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={() => setDeleteOpen(true)}
+            >
               {t('classroom.settings.delete_classroom')}
             </Button>
           </AlertDialogTrigger>
@@ -96,10 +111,31 @@ export function SettingsClient({
               <AlertDialogDescription>{t('classroom.settings.delete_description')}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+              <AlertDialogCancel disabled={deleting}>{t('common.cancel')}</AlertDialogCancel>
               <form action={deleteClassroom}>
-                <AlertDialogAction type="submit" className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                  {t('classroom.settings.delete_classroom')}
+                <AlertDialogAction asChild>
+                  <button
+                    type="button"
+                    disabled={deleting}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      if (deleting) return
+                      setDeleting(true)
+                      setDeleteOpen(true)
+                      const form = e.currentTarget.closest('form')
+                      form?.requestSubmit()
+                    }}
+                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground transition-all hover:bg-destructive/90 disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    {deleting ? (
+                      <>
+                        <Spinner className="text-destructive-foreground" />
+                        {t('common.submitting')}
+                      </>
+                    ) : (
+                      t('classroom.settings.delete_classroom')
+                    )}
+                  </button>
                 </AlertDialogAction>
               </form>
             </AlertDialogFooter>
