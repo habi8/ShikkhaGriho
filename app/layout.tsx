@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   generator: 'v0.app',
   icons: {
     icon: '/images/logo.png',
+    apple: '/images/logo.png',
   },
 }
 
