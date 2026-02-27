@@ -7,7 +7,7 @@ export function CTA() {
   const { t } = useTranslation()
 
   return (
-    <section id="about" className="relative py-16 sm:py-20">
+    <section id="about" className="relative mt-10 py-16 sm:mt-12 sm:py-20">
       <div className="mx-auto max-w-6xl px-6">
         {/* Our Story */}
         <div className="rounded-3xl bg-gradient-to-br from-[#F0FDF4] via-white to-[#F8FAFC] px-6 py-12 text-center sm:px-10 sm:py-14 fade-in-up">

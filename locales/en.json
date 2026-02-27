@@ -158,8 +158,28 @@
       "sample_student_1": "Nusrat A.",
       "sample_student_2": "Rahim H.",
       "sample_student_3": "Farah T.",
+      "sample_class_1": "Math 101",
+      "sample_class_1_desc": "Algebra basics",
+      "sample_class_2": "Physics 202",
+      "sample_class_2_desc": "Forces & motion",
+      "sample_class_3": "History 7B",
+      "sample_class_3_desc": "Bangladesh history",
       "present_notice": "One student marked present",
       "msg_short": "MSG"
+    },
+    "pillars": {
+      "simple": {
+        "title": "Simple Setup",
+        "body": "Create and manage classrooms in minutes."
+      },
+      "structured": {
+        "title": "Structured Learning",
+        "body": "Announcements, attendance, and members organized in one place."
+      },
+      "accessible": {
+        "title": "Accessible Anywhere",
+        "body": "Works seamlessly on desktop and mobile."
+      }
     },
     "cta": {
       "story_title": "Our Story",
@@ -292,6 +312,7 @@
     },
     "section_label": "Section",
     "leave_confirm": "Are you sure you want to leave this classroom?",
+    "leave_title": "Leave this classroom?",
     "leave_button": "Leave Classroom",
     "about": {
       "students_enrolled": "Students enrolled",
@@ -314,6 +335,8 @@
       "title": "Classroom details",
       "danger_zone": "Danger zone",
       "danger_body": "Deleting this classroom is permanent. All announcements, comments, attendance records, and member data will be removed. This action cannot be undone.",
+      "delete_title": "Delete this classroom?",
+      "delete_description": "This will permanently remove the classroom and all associated data.",
       "delete_classroom": "Delete classroom"
     }
   },

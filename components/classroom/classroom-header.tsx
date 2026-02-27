@@ -7,6 +7,17 @@ import { Classroom } from '@/types'
 import { leaveClassroom } from '@/lib/actions/classroom'
 import { LogOut } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 interface ClassroomHeaderProps {
   classroom: Classroom
@@ -70,15 +81,32 @@ export function ClassroomHeader({ classroom, isTeacher }: ClassroomHeaderProps) 
 
           {/* Leave classroom for students, anchored to the right */}
           {!isTeacher && (
-            <form action={leaveClassroom} onSubmit={(e) => {
-              if (!confirm(t('classroom.leave_confirm'))) e.preventDefault()
-            }} className="ml-auto mt-1 mr-2 flex">
-              <input type="hidden" name="classroom_id" value={classroom.id} />
-              <button type="submit" className="shrink-0 px-4 py-2 text-base font-semibold text-destructive hover:bg-destructive/10 rounded-xl transition-all hover:scale-[1.02] cursor-pointer inline-flex items-center gap-2 m-1">
-                <LogOut className="h-4 w-4" />
-                {t('classroom.leave_button')}
-              </button>
-            </form>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button
+                  type="button"
+                  className="ml-auto mt-1 mr-2 shrink-0 px-4 py-2 text-base font-semibold text-destructive hover:bg-destructive/10 rounded-xl transition-all hover:scale-[1.02] cursor-pointer inline-flex items-center gap-2 m-1"
+                >
+                  <LogOut className="h-4 w-4" />
+                  {t('classroom.leave_button')}
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="sm:max-w-md">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{t('classroom.leave_title')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t('classroom.leave_confirm')}</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                  <form action={leaveClassroom}>
+                    <input type="hidden" name="classroom_id" value={classroom.id} />
+                    <AlertDialogAction type="submit" className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                      {t('classroom.leave_button')}
+                    </AlertDialogAction>
+                  </form>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           )}
         </div>
       </nav>

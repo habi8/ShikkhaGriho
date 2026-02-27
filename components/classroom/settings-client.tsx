@@ -6,6 +6,17 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { AlertTriangle } from 'lucide-react'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 export function SettingsClient({
   classroomId,
@@ -73,11 +84,27 @@ export function SettingsClient({
         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
           {t('classroom.settings.danger_body')}
         </p>
-        <form action={deleteClassroom}>
-          <Button type="submit" variant="destructive" size="sm">
-            {t('classroom.settings.delete_classroom')}
-          </Button>
-        </form>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button type="button" variant="destructive" size="sm">
+              {t('classroom.settings.delete_classroom')}
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="sm:max-w-md">
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t('classroom.settings.delete_title')}</AlertDialogTitle>
+              <AlertDialogDescription>{t('classroom.settings.delete_description')}</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+              <form action={deleteClassroom}>
+                <AlertDialogAction type="submit" className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                  {t('classroom.settings.delete_classroom')}
+                </AlertDialogAction>
+              </form>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   )

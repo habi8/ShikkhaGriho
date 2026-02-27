@@ -170,6 +170,7 @@
     animation: soft-gradient-move 12s ease-in-out infinite;
   }
 
+
   .present-badge {
     animation: present-pulse 3s ease-in-out infinite;
   }
@@ -187,8 +188,106 @@
     animation-delay: var(--fade-delay, 0ms);
   }
 
+
+  @keyframes hero-tab-attendance {
+    0%, 28% { background-color: #DCFCE7; color: #166534; box-shadow: 0 10px 20px -15px rgba(15, 23, 42, 0.35); }
+    32% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+    100% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+  }
+
+  @keyframes hero-tab-members {
+    0%, 32% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+    36% { background-color: #DCFCE7; color: #166534; box-shadow: 0 10px 20px -15px rgba(15, 23, 42, 0.35); }
+    62% { background-color: #DCFCE7; color: #166534; box-shadow: 0 10px 20px -15px rgba(15, 23, 42, 0.35); }
+    66% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+    100% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+  }
+
+  @keyframes hero-tab-classrooms {
+    0%, 68% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+    72% { background-color: #DCFCE7; color: #166534; box-shadow: 0 10px 20px -15px rgba(15, 23, 42, 0.35); }
+    92% { background-color: #DCFCE7; color: #166534; box-shadow: 0 10px 20px -15px rgba(15, 23, 42, 0.35); }
+    96% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+    100% { background-color: #ffffff; color: #64748B; box-shadow: none; }
+  }
+
+  @keyframes hero-page-attendance {
+    0%, 30% { opacity: 1; transform: translateY(0); }
+    36% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 0; transform: translateY(8px); }
+  }
+
+  @keyframes hero-page-members {
+    0%, 32% { opacity: 0; transform: translateY(8px); }
+    36% { opacity: 1; transform: translateY(0); }
+    62% { opacity: 1; transform: translateY(0); }
+    66% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 0; transform: translateY(8px); }
+  }
+
+  @keyframes hero-page-classrooms {
+    0%, 66% { opacity: 0; transform: translateY(8px); }
+    72% { opacity: 1; transform: translateY(0); }
+    92% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(8px); }
+  }
+
+  @keyframes hero-panel-click {
+    0%, 54% { transform: translateY(0) scale(1); box-shadow: none; }
+    58% { transform: translateY(1px) scale(0.99); box-shadow: inset 0 0 0 1px rgba(34, 197, 94, 0.4); }
+    62% { transform: translateY(0) scale(1); box-shadow: 0 12px 24px -18px rgba(15, 23, 42, 0.35); }
+    100% { transform: translateY(0) scale(1); box-shadow: none; }
+  }
+
+
+  .hero-tab-target-attendance {
+    position: relative;
+    animation: hero-tab-attendance 12s ease-in-out infinite;
+  }
+
+  .hero-tab-target-members {
+    position: relative;
+    animation: hero-tab-members 12s ease-in-out infinite;
+  }
+
+  .hero-tab-target-classrooms {
+    position: relative;
+    animation: hero-tab-classrooms 12s ease-in-out infinite;
+  }
+
+  .hero-tab-page {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-tab-page-attendance {
+    animation: hero-page-attendance 12s ease-in-out infinite;
+  }
+
+  .hero-tab-page-members {
+    animation: hero-page-members 12s ease-in-out infinite;
+  }
+
+  .hero-tab-page-classrooms {
+    animation: hero-page-classrooms 12s ease-in-out infinite;
+  }
+
+  .hero-panel-click {
+    animation: hero-panel-click 12s ease-in-out infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .fade-in-up {
+      animation: none;
+    }
+    .hero-tab-target-attendance,
+    .hero-tab-target-members,
+    .hero-tab-target-classrooms,
+    .hero-tab-page-attendance,
+    .hero-tab-page-members,
+    .hero-tab-page-classrooms,
+    .hero-panel-click {
       animation: none;
     }
   }

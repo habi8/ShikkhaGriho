@@ -19,8 +19,8 @@ export function NavbarClient({
 
   return (
     <header className="sticky top-0 z-50 bg-white">
-      <nav className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 py-4 sm:flex-row sm:justify-between sm:gap-6">
-        <Logo size={56} />
+      <nav className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 py-3 sm:flex-row sm:justify-between sm:gap-6">
+        <Logo size={52} />
         <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-end sm:gap-6">
           <div className="inline-flex">
             <LanguageToggle />
@@ -37,7 +37,7 @@ export function NavbarClient({
               <form action={signOut}>
                 <button
                   type="submit"
-                  className="text-sm font-medium text-[#0F172A] hover:text-[#2E8B57] transition-colors sm:text-base"
+                  className="text-sm font-medium text-[#0F172A] hover:text-[#2E8B57] transition-colors sm:text-base cursor-pointer"
                 >
                   {t('nav.sign_out')}
                 </button>
